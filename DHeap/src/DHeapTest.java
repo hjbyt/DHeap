@@ -4,13 +4,14 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class DHeapTest {
 
     private static final Integer[] TEST_NUMBERS = {1, 5, 2, 7, 9, 4, 6, 2, 4, 1, 6};
-    List<Integer> numbersList = Arrays.asList(TEST_NUMBERS);
+    private static final List<Integer> TEST_NUMBERS_LIST = Arrays.asList(TEST_NUMBERS);
     private static final int NUMBER_OF_HEAPS = 20;
     private static final int MAX_SIZE = 5000;
 
@@ -67,7 +68,7 @@ public class DHeapTest {
         repeatForAllHeaps((heap) -> {
             int size = 0;
             checkHeap(heap, size);
-            for (Integer number : numbersList) {
+            for (Integer number : TEST_NUMBERS_LIST) {
                 heap.Insert(number);
                 size += 1;
                 checkHeap(heap, size);
@@ -82,7 +83,12 @@ public class DHeapTest {
 
     @Test
     public void testGet_Min() throws Exception {
-        //TODO
+        repeatForAllHeaps((heap) -> {
+            heap.arrayToHeap(TEST_NUMBERS);
+            int min1 = Collections.min(TEST_NUMBERS_LIST);
+            int min2 = heap.Get_Min().getKey();
+            assertEquals(min1, min2);
+        });
     }
 
     @Test
