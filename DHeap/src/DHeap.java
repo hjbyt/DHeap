@@ -1,7 +1,3 @@
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * D-Heap
  */
@@ -67,6 +63,25 @@ public class DHeap {
         return (d * i) + k;
     }
 
+    private int childrenCount(int i) {
+        int c = child(i, 1);
+        if (c >= size) {
+            return 0;
+        }
+        if (size - c <= d) {
+            return size - c;
+        }
+        return d;
+    }
+
+    private boolean hasChildren(int i) {
+        return childrenCount(i) > 0;
+    }
+
+    private int lastChildIndex(int i) {
+        return child(i, childrenCount(i));
+    }
+
     //TODO XXX: ask TA about this...
     /**
      * public static int parent(i), child(i,k)
@@ -96,6 +111,13 @@ public class DHeap {
      * postcondition: isHeap()
      */
     public void Insert(DHeap_Item item) {
+        assert item != null;
+        size += 1;
+        setItem(size - 1, item);
+        heapifyUp(size - 1);
+    }
+
+    private void heapifyUp(int i) {
         //TODO
     }
 
@@ -115,14 +137,17 @@ public class DHeap {
     }
 
     private void heapifyDown(int i) {
-        int min = minChildIndex(i);
-        if (array[min].getKey() < array[i].getKey()) {
-            swapItems(i, min);
-            heapifyDown(min);
+        while (hasChildren(i)) {
+            int min = minChildIndex(i);
+            if (array[min].getKey() < array[i].getKey()) {
+                swapItems(i, min);
+                i = min;
+            }
         }
     }
 
     private void setItem(int i, DHeap_Item item) {
+        assert i >= 0 && i < size;
         array[i] = item;
         array[i].setPos(i);
     }
@@ -135,8 +160,9 @@ public class DHeap {
     }
 
     private int minChildIndex(int i) {
+        assert hasChildren(i);
         int start = child(i, 1);
-        int end = child(i, d);
+        int end = lastChildIndex(i);
         int min_index = start;
         for (int j = start + 1; j <= end; j++) {
             if (array[j].getKey() < array[min_index].getKey()) {
