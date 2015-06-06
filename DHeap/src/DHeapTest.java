@@ -43,7 +43,8 @@ public class DHeapTest {
     @Test
     public void testArrayToHeap() throws Exception {
         repeatForAllHeaps((heap) -> {
-            Integer[] numbers = {1, 5, 2, 7, 9, 4, 6, 2, 4, 1, 6};
+            //Integer[] numbers = {1, 5, 2, 7, 9, 4, 6, 2, 4, 1, 6};
+            Integer[] numbers = {1, 5, 2};
             checkHeap(heap, 0);
             heap.arrayToHeap(numbers);
             checkHeap(heap, numbers.length);

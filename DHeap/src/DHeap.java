@@ -46,8 +46,8 @@ public class DHeap {
     }
 
     private void heapify() {
-        final int last_internal_node = (size / d);
-        for (int i = last_internal_node; i >= 0; i--) {
+        //TODO: optimize to start the first internal node?
+        for (int i = size - 1; i >= 0; i--) {
             heapifyDown(i);
         }
     }
