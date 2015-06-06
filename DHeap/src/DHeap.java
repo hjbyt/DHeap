@@ -40,7 +40,7 @@ public class DHeap {
     private void heapify() {
         //TODO: i don't know if this is correct.
         //      i adapted this from cormen, it should be tested...
-        final int last_internal_node =  (size / d) - 1;
+        final int last_internal_node = (size / d) - 1;
         for (int i = last_internal_node; i >= 0; i--) {
             heapifyDown(i);
         }
@@ -219,6 +219,12 @@ public class DHeap {
         return array[0];
     }
 
+    private DHeap_Item popMin() {
+        DHeap_Item item = Get_Min();
+        Delete_Min();
+        return item;
+    }
+
     /**
      * public void Decrease_Key(DHeap_Item item, int delta)
      * <p>
@@ -264,6 +270,25 @@ public class DHeap {
      * Sorting should be done using the DHeap.
      */
     public static int[] DHeapSort(int[] array) {
-        return null; //TODO
+        //TODO: is it okay to simply use d=2?
+        return DHeapSort(array, 2);
+    }
+
+    private static int[] DHeapSort(int[] array, int d) {
+        DHeap heap = new DHeap(d, array.length);
+        DHeap_Item[] items = new DHeap_Item[array.length];
+        int[] sorted = new int[array.length];
+
+        for (int i = 0; i < array.length; i++) {
+            DHeap_Item item = new DHeap_Item(null, array[i]);
+            items[i] = item;
+        }
+        heap.arrayToHeap(items);
+
+        for (int i = 0; i < array.length; i++) {
+            sorted[i] = heap.popMin().getKey();
+        }
+
+        return sorted;
     }
 }
