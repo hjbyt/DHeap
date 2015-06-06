@@ -205,7 +205,13 @@ public class DHeap {
      * postcondition: isHeap()
      */
     public void Decrease_Key(DHeap_Item item, int delta) {
-        //TODO
+        assert delta >= 0;
+        assert item != null;
+        assert item.getPos() < size;
+        int key = item.getKey();
+        key -= delta;
+        item.setKey(key);
+        heapifyUp(item.getPos());
     }
 
     /**
@@ -218,7 +224,15 @@ public class DHeap {
      * postcondition: isHeap()
      */
     public void Delete(DHeap_Item item) {
-        //TODO
+        assert item != null;
+        assert item.getPos() < size;
+        int i = item.getPos();
+        while (i != 0) {
+            int p = parent(i);
+            swapItems(i, p);
+            i = p;
+        }
+        Delete_Min();
     }
 
     /**
