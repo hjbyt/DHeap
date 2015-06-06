@@ -9,6 +9,8 @@ import java.util.function.Consumer;
 
 public class DHeapTest {
 
+    private static final Integer[] TEST_NUMBERS = {1, 5, 2, 7, 9, 4, 6, 2, 4, 1, 6};
+    List<Integer> numbersList = Arrays.asList(TEST_NUMBERS);
     private static final int NUMBER_OF_HEAPS = 20;
     private static final int MAX_SIZE = 5000;
 
@@ -43,11 +45,9 @@ public class DHeapTest {
     @Test
     public void testArrayToHeap() throws Exception {
         repeatForAllHeaps((heap) -> {
-            //Integer[] numbers = {1, 5, 2, 7, 9, 4, 6, 2, 4, 1, 6};
-            Integer[] numbers = {1, 5, 2};
             checkHeap(heap, 0);
-            heap.arrayToHeap(numbers);
-            checkHeap(heap, numbers.length);
+            heap.arrayToHeap(TEST_NUMBERS);
+            checkHeap(heap, TEST_NUMBERS.length);
         });
 
     }
@@ -65,11 +65,9 @@ public class DHeapTest {
     @Test
     public void testInsert() throws Exception {
         repeatForAllHeaps((heap) -> {
-            Integer[] numbers_ = {1, 5, 2, 7, 9, 4, 6, 2, 4, 1, 6};
-            List<Integer> numbers = Arrays.asList(numbers_);
             int size = 0;
             checkHeap(heap, size);
-            for (Integer number : numbers) {
+            for (Integer number : numbersList) {
                 heap.Insert(number);
                 size += 1;
                 checkHeap(heap, size);
