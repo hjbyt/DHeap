@@ -164,6 +164,7 @@ public class DHeap {
      */
     public void Insert(DHeap_Item item) {
         assert item != null;
+        assert size < max_size;
         size += 1;
         setItem(size - 1, item);
         heapifyUp(size - 1);
@@ -293,7 +294,7 @@ public class DHeap {
      */
     public void Delete(DHeap_Item item) {
         assert item != null;
-        assert item.getPos() < size;
+        assert item.getPos() >= 0 && item.getPos() < size;
         int i = item.getPos();
         while (i != 0) {
             int p = parent(i);
@@ -308,6 +309,7 @@ public class DHeap {
      * Sorting should be done using the DHeap.
      */
     public static int[] DHeapSort(int[] array) {
+        assert array != null;
         //TODO: is it okay to simply use d=2?
         return DHeapSort(array, 2);
     }
