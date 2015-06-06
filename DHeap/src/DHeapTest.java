@@ -78,7 +78,7 @@ public class DHeapTest {
 
     @Test
     public void testDelete_Min() throws Exception {
-        //TODO
+        assert false; //TODO
     }
 
     @Test
@@ -93,22 +93,22 @@ public class DHeapTest {
 
     @Test
     public void testDecrease_Key() throws Exception {
-        //TODO
+        assert false; //TODO
     }
 
     @Test
     public void testDelete() throws Exception {
-        //TODO
+        assert false; //TODO
     }
 
     @Test
     public void testDHeapSort() throws Exception {
-        //TODO
+        assert false; //TODO
     }
 
     @Test
     public void testFuzz() throws Exception {
-        //TODO
+        assert false; //TODO
     }
 
     @Test
