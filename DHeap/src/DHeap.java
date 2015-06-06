@@ -110,26 +110,28 @@ public class DHeap {
     public void Delete_Min() {
         assert size > 0;
         size -= 1;
-        array[0] = array[size];
-        array[0].setPos(0); //TODO: unneeaded?
+        setItem(0, array[size]);
         heapifyDown(0);
     }
 
     private void heapifyDown(int i) {
         int min = minChildIndex(i);
         if (array[min].getKey() < array[i].getKey()) {
-            DHeap_Item temp = array[i];
-            array[i] = array[min];
-            updatePosition(i);
-            array[min] = temp;
+            swapItems(i, min);
             heapifyDown(min);
-        } else {
-            updatePosition(i);
         }
     }
 
-    private void updatePosition(int i) {
+    private void setItem(int i, DHeap_Item item) {
+        array[i] = item;
         array[i].setPos(i);
+    }
+
+    private void swapItems(int i, int j) {
+        DHeap_Item temp = array[i];
+        setItem(i, array[j]);
+        setItem(j, temp);
+
     }
 
     private int minChildIndex(int i) {
