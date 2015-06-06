@@ -53,7 +53,7 @@ public class DHeap {
 
 
     public int parent(int i) {
-        assert i >= 0;
+        assert i > 0;
         return (i - 1) / d;
     }
 
@@ -118,7 +118,15 @@ public class DHeap {
     }
 
     private void heapifyUp(int i) {
-        //TODO
+        while (i != 0) {
+            int p = parent(i);
+            if (array[i].getKey() < array[p].getKey()) {
+                swapItems(i, p);
+                i = p;
+            } else {
+                break;
+            }
+        }
     }
 
     /**
