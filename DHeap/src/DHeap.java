@@ -113,11 +113,11 @@ public class DHeap {
      * Note that indices of arrays in Java start from 0.
      */
 //    public static int parent(int i) {
-//        return 999; //TODO
+//        return 999;
 //    }
 //
 //    public static int child(int i, int k) {
-//        return 999; //TODO
+//        return 999;
 //    }
 
     /**
