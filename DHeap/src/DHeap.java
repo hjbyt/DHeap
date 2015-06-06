@@ -37,6 +37,14 @@ public class DHeap {
         heapify();
     }
 
+    public void arrayToHeap(Integer[] numbers) {
+        DHeap_Item[] items = new DHeap_Item[numbers.length];
+        for (int i = 0; i < numbers.length; i++) {
+            items[i] = newItem(numbers[i]);
+        }
+        arrayToHeap(items);
+    }
+
     private void heapify() {
         //TODO: i don't know if this is correct.
         //      i adapted this from cormen, it should be tested...
@@ -139,6 +147,14 @@ public class DHeap {
         size += 1;
         setItem(size - 1, item);
         heapifyUp(size - 1);
+    }
+
+    public void Insert(int number) {
+        Insert(newItem(number));
+    }
+
+    private DHeap_Item newItem(int number) {
+        return new DHeap_Item(Integer.toString(number), number);
     }
 
     private void heapifyUp(int i) {
