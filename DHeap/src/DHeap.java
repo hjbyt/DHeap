@@ -38,7 +38,12 @@ public class DHeap {
     }
 
     private void heapify() {
-        //TODO
+        //TODO: i don't know if this is correct.
+        //      i adapted this from cormen, it should be tested...
+        final int last_internal_node =  (size / d) - 1;
+        for (int i = last_internal_node; i >= 0; i--) {
+            heapifyDown(i);
+        }
     }
 
     /**
