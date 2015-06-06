@@ -1,4 +1,4 @@
-//TODO: undo the reformat??
+//TODO: revert this to the orignial??
 public class DHeap_Item {
 
     private String name;
@@ -30,5 +30,10 @@ public class DHeap_Item {
 
     public int getPos() {
         return pos;
+    }
+
+    @Override
+    public String toString() {
+        return Integer.toString(key);
     }
 }

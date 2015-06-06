@@ -46,11 +46,31 @@ public class DHeap {
     }
 
     private void heapify() {
-        //TODO: i don't know if this is correct.
-        //      i adapted this from cormen, it should be tested...
-        final int last_internal_node = (size / d) - 1;
+        final int last_internal_node = (size / d);
         for (int i = last_internal_node; i >= 0; i--) {
             heapifyDown(i);
+        }
+    }
+
+    public void printTree() {
+        if (size > 0) {
+            printTree(0, "", true);
+        } else {
+            System.out.println("empty");
+        }
+    }
+
+    // Note: adapted from http://stackoverflow.com/a/8948691
+    private void printTree(int i, String prefix, boolean isTail) {
+        System.out.println(prefix + (isTail ? "+-- " : "+-- ") + array[i].toString());
+
+        if (hasChildren(i)) {
+            int start = child(i, 1);
+            int end = lastChildIndex(i);
+            for (int j = start; j < end; j++) {
+                printTree(j, prefix + (isTail ? "    " : "|   "), false);
+            }
+            printTree(lastChildIndex(i), prefix + (isTail ? "    " : "|   "), true);
         }
     }
 
@@ -190,6 +210,8 @@ public class DHeap {
             if (array[min].getKey() < array[i].getKey()) {
                 swapItems(i, min);
                 i = min;
+            } else {
+                break;
             }
         }
     }

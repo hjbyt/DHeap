@@ -17,8 +17,8 @@ public class DHeapTest {
     @Before
     public void setUp() throws Exception {
         heaps = new ArrayList<>(NUMBER_OF_HEAPS);
-        for (int i = 0; i < NUMBER_OF_HEAPS; i++) {
-            DHeap heap = new DHeap(i + 1, MAX_SIZE);
+        for (int i = 1; i <= NUMBER_OF_HEAPS; i++) {
+            DHeap heap = new DHeap(i, MAX_SIZE);
             heaps.add(heap);
         }
     }
@@ -30,15 +30,23 @@ public class DHeapTest {
         }
     }
 
+    private void checkHeap(DHeap heap, int expectedSize) {
+        try {
+            assertEquals(expectedSize, heap.getSize());
+            assertTrue(heap.isHeap());
+        } catch (Exception e) {
+            heap.printTree();
+            throw e;
+        }
+    }
+
     @Test
     public void testArrayToHeap() throws Exception {
         repeatForAllHeaps((heap) -> {
-            Integer[] numbers = {1,5,2,7,9,4,6,2,4,1,6};
-            assertEquals(0, heap.getSize());
-            assertTrue(heap.isHeap());
+            Integer[] numbers = {1, 5, 2, 7, 9, 4, 6, 2, 4, 1, 6};
+            checkHeap(heap, 0);
             heap.arrayToHeap(numbers);
-            assertEquals(numbers.length, heap.getSize());
-            assertTrue(heap.isHeap());
+            checkHeap(heap, numbers.length);
         });
 
     }
@@ -56,16 +64,14 @@ public class DHeapTest {
     @Test
     public void testInsert() throws Exception {
         repeatForAllHeaps((heap) -> {
-            Integer[] numbers_ = {1,5,2,7,9,4,6,2,4,1,6};
+            Integer[] numbers_ = {1, 5, 2, 7, 9, 4, 6, 2, 4, 1, 6};
             List<Integer> numbers = Arrays.asList(numbers_);
             int size = 0;
-            assertEquals(size, heap.getSize());
-            assertTrue(heap.isHeap());
+            checkHeap(heap, size);
             for (Integer number : numbers) {
                 heap.Insert(number);
                 size += 1;
-                assertEquals(size, heap.getSize());
-                assertTrue(heap.isHeap());
+                checkHeap(heap, size);
             }
         });
     }
