@@ -1,3 +1,7 @@
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * D-Heap
  */
@@ -31,6 +35,13 @@ public class DHeap {
      * size = array.length()
      */
     public void arrayToHeap(DHeap_Item[] array1) {
+        assert array1.length <= max_size;
+        System.arraycopy(array1, 0, array, 0, array1.length);
+        size = array1.length;
+        heapify();
+    }
+
+    private void heapify() {
         //TODO
     }
 
@@ -45,6 +56,18 @@ public class DHeap {
     }
 
 
+    public int parent(int i) {
+        assert i >= 0;
+        return (i - 1) / d;
+    }
+
+    public int child(int i, int k) {
+        assert i >= 0;
+        assert k >= 1 && k <= d;
+        return (d * i) + k;
+    }
+
+    //TODO XXX: ask TA about this...
     /**
      * public static int parent(i), child(i,k)
      * (2 methods)
@@ -55,13 +78,13 @@ public class DHeap {
      * vertex i in a complete D-ary tree stored in an array. 1 <= k <= d.
      * Note that indices of arrays in Java start from 0.
      */
-    public static int parent(int i) {
-        return 999; //TODO
-    }
-
-    public static int child(int i, int k) {
-        return 999; //TODO
-    }
+//    public static int parent(int i) {
+//        return 999; //TODO
+//    }
+//
+//    public static int child(int i, int k) {
+//        return 999; //TODO
+//    }
 
     /**
      * public void Insert(DHeap_Item item)
@@ -85,7 +108,40 @@ public class DHeap {
      * postcondition: isHeap()
      */
     public void Delete_Min() {
-        //TODO
+        assert size > 0;
+        size -= 1;
+        array[0] = array[size];
+        array[0].setPos(0); //TODO: unneeaded?
+        heapifyDown(0);
+    }
+
+    private void heapifyDown(int i) {
+        int min = minChildIndex(i);
+        if (array[min].getKey() < array[i].getKey()) {
+            DHeap_Item temp = array[i];
+            array[i] = array[min];
+            updatePosition(i);
+            array[min] = temp;
+            heapifyDown(min);
+        } else {
+            updatePosition(i);
+        }
+    }
+
+    private void updatePosition(int i) {
+        array[i].setPos(i);
+    }
+
+    private int minChildIndex(int i) {
+        int start = child(i, 1);
+        int end = child(i, d);
+        int min_index = start;
+        for (int j = start + 1; j <= end; j++) {
+            if (array[j].getKey() < array[min_index].getKey()) {
+                min_index = j;
+            }
+        }
+        return min_index;
     }
 
 
@@ -99,7 +155,8 @@ public class DHeap {
      * postcondition: isHeap()
      */
     public DHeap_Item Get_Min() {
-        return null; //TODO
+        assert size > 0;
+        return array[0];
     }
 
     /**
