@@ -2,11 +2,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.junit.Assume.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class DHeapTest {
 
@@ -26,14 +26,7 @@ public class DHeapTest {
         }
     }
 
-    private void repeatForAllHeaps(Consumer<DHeap> function) {
-        for (int i = 0; i < NUMBER_OF_HEAPS; i++) {
-            DHeap heap = heaps.get(i);
-            function.accept(heap);
-        }
-    }
-
-    private void checkHeap(DHeap heap, int expectedSize) {
+    private static void checkHeap(DHeap heap, int expectedSize) {
         try {
             assertEquals(expectedSize, heap.getSize());
             heap.checkHeap();
@@ -45,12 +38,11 @@ public class DHeapTest {
 
     @Test
     public void testArrayToHeap() throws Exception {
-        repeatForAllHeaps((heap) -> {
+        heaps.forEach((heap) -> {
             checkHeap(heap, 0);
             heap.arrayToHeap(TEST_NUMBERS);
             checkHeap(heap, TEST_NUMBERS.length);
         });
-
     }
 
     @Test
@@ -65,7 +57,7 @@ public class DHeapTest {
 
     @Test
     public void testInsert() throws Exception {
-        repeatForAllHeaps((heap) -> {
+        heaps.forEach((heap) -> {
             int size = 0;
             checkHeap(heap, size);
             for (Integer number : TEST_NUMBERS_LIST) {
@@ -76,6 +68,15 @@ public class DHeapTest {
         });
     }
 
+
+    public static void initHeap(DHeap heap) {
+        try {
+            heap.arrayToHeap(TEST_NUMBERS);
+        } catch (Throwable e) {
+            assumeNoException(e);
+        }
+    }
+
     @Test
     public void testDelete_Min() throws Exception {
         assert false; //TODO
@@ -83,10 +84,10 @@ public class DHeapTest {
 
     @Test
     public void testGet_Min() throws Exception {
-        repeatForAllHeaps((heap) -> {
-            heap.arrayToHeap(TEST_NUMBERS);
+        heaps.forEach((heap) -> {
+            initHeap(heap);
             DHeap_Item min_item = heap.Get_Min();
-            assertEquals((int)Collections.min(TEST_NUMBERS_LIST), min_item.getKey());
+            assertEquals((int) Collections.min(TEST_NUMBERS_LIST), min_item.getKey());
             assertEquals(0, min_item.getPos());
         });
     }
