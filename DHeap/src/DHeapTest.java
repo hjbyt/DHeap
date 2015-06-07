@@ -1,12 +1,10 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-import static org.junit.Assume.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assume.assumeNoException;
 
 public class DHeapTest {
 
@@ -72,6 +70,7 @@ public class DHeapTest {
     public static void initHeap(DHeap heap) {
         try {
             heap.arrayToHeap(TEST_NUMBERS);
+            checkHeap(heap, TEST_NUMBERS.length);
         } catch (Throwable e) {
             assumeNoException(e);
         }
@@ -79,7 +78,22 @@ public class DHeapTest {
 
     @Test
     public void testDelete_Min() throws Exception {
-        assert false; //TODO
+        for (DHeap heap : heaps) {
+            initHeap(heap);
+            int size = heap.getSize();
+
+            List<DHeap_Item> itemsBefore = new ArrayList<>(heap.getItems());
+            heap.Delete_Min();
+            List<DHeap_Item> itemsAfter = new ArrayList<>(heap.getItems());
+
+            checkHeap(heap, size - 1);
+            assertEquals(itemsBefore.size() - 1, itemsAfter.size());
+
+            itemsBefore.removeAll(itemsAfter);
+            DHeap_Item deletedItem = itemsBefore.get(0);
+            assertEquals(0, deletedItem.getPos());
+            assertEquals((int) Collections.min(TEST_NUMBERS_LIST), deletedItem.getKey());
+        }
     }
 
     @Test

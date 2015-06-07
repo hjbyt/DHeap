@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Collection;
+
 /**
  * D-Heap
  */
@@ -14,6 +17,11 @@ public class DHeap {
         d = m_d;
         array = new DHeap_Item[max_size];
         size = 0;
+    }
+
+    // For testing
+    Collection<DHeap_Item> getItems() {
+        return Arrays.asList(array).subList(0, size);
     }
 
     // Getter for size
