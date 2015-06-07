@@ -34,6 +34,9 @@ public class DHeap {
         assert array1.length <= max_size;
         System.arraycopy(array1, 0, array, 0, array1.length);
         size = array1.length;
+        for (int i = 0; i < size; i++) {
+            array[i].setPos(i);
+        }
         heapify();
     }
 
