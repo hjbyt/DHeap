@@ -2,10 +2,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+
+import java.util.*;
 import java.util.function.Consumer;
 
 public class DHeapTest {
@@ -101,9 +99,40 @@ public class DHeapTest {
         assert false; //TODO
     }
 
+    private static int[] copyArray(Integer[] arr) {
+        int[] newArr = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            newArr[i] = arr[i];
+        }
+        return newArr;
+    }
+
+    private static void testSortArray(int[] javaSorted) {
+        int[] ourSorted = DHeap.DHeapSort(javaSorted);
+        Arrays.sort(javaSorted);
+        assertArrayEquals(ourSorted, javaSorted);
+    }
+
+    private static int[] getRandomArray(int size) {
+        Random rand = new Random();
+        int[] arr = new int[size];
+        for (int i = 0; i < size; i++) {
+            arr[i] = rand.nextInt();
+        }
+        return arr;
+    }
+
     @Test
     public void testDHeapSort() throws Exception {
-        assert false; //TODO
+        testSortArray(copyArray(TEST_NUMBERS));
+    }
+
+    @Test
+    public void testDHeapSort_Fuzz() throws Exception {
+        Random rand = new Random();
+        for (int i = 0; i <= 100; i++) {
+            testSortArray(getRandomArray(i));
+        }
     }
 
     @Test

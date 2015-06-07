@@ -112,6 +112,16 @@ public class DHeap {
         }
     }
 
+    /**
+     * public static int parent(i), child(i,k)
+     * (2 methods)
+     * <p>
+     * precondition: i >= 0
+     * <p>
+     * The methods compute the index of the parent and the k-th child of
+     * vertex i in a complete D-ary tree stored in an array. 1 <= k <= d.
+     * Note that indices of arrays in Java start from 0.
+     */
     public int parent(int i) {
         assert i > 0;
         return (i - 1) / d;
@@ -141,25 +151,6 @@ public class DHeap {
     private int lastChildIndex(int i) {
         return child(i, childrenCount(i));
     }
-
-    //TODO XXX: ask TA about this...
-    /**
-     * public static int parent(i), child(i,k)
-     * (2 methods)
-     * <p>
-     * precondition: i >= 0
-     * <p>
-     * The methods compute the index of the parent and the k-th child of
-     * vertex i in a complete D-ary tree stored in an array. 1 <= k <= d.
-     * Note that indices of arrays in Java start from 0.
-     */
-//    public static int parent(int i) {
-//        return 999;
-//    }
-//
-//    public static int child(int i, int k) {
-//        return 999;
-//    }
 
     /**
      * public void Insert(DHeap_Item item)
@@ -226,7 +217,7 @@ public class DHeap {
     }
 
     private void setItem(int i, DHeap_Item item) {
-        assert i >= 0 && i < size;
+        assert i >= 0 && i <= size;
         array[i] = item;
         array[i].setPos(i);
     }
