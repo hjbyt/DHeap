@@ -36,7 +36,7 @@ public class DHeapTest {
     private void checkHeap(DHeap heap, int expectedSize) {
         try {
             assertEquals(expectedSize, heap.getSize());
-            assertTrue(heap.isHeap());
+            heap.checkHeap();
         } catch (Exception e) {
             heap.printTree();
             throw e;
@@ -85,9 +85,9 @@ public class DHeapTest {
     public void testGet_Min() throws Exception {
         repeatForAllHeaps((heap) -> {
             heap.arrayToHeap(TEST_NUMBERS);
-            int min1 = Collections.min(TEST_NUMBERS_LIST);
-            int min2 = heap.Get_Min().getKey();
-            assertEquals(min1, min2);
+            DHeap_Item min_item = heap.Get_Min();
+            assertEquals((int)Collections.min(TEST_NUMBERS_LIST), min_item.getKey());
+            assertEquals(0, min_item.getPos());
         });
     }
 

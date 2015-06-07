@@ -103,6 +103,12 @@ public class DHeap {
         return true;
     }
 
+    void checkHeap() {
+        assert isHeap();
+        for (int i = 0; i < size; i++) {
+            assert array[i].getPos() == i;
+        }
+    }
 
     public int parent(int i) {
         assert i > 0;
