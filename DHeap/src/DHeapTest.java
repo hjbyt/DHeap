@@ -38,11 +38,11 @@ public class DHeapTest {
 
     @Test
     public void testArrayToHeap() throws Exception {
-        heaps.forEach((heap) -> {
+        for (DHeap heap : heaps) {
             checkHeap(heap, 0);
             heap.arrayToHeap(TEST_NUMBERS);
             checkHeap(heap, TEST_NUMBERS.length);
-        });
+        }
     }
 
     @Test
@@ -57,7 +57,7 @@ public class DHeapTest {
 
     @Test
     public void testInsert() throws Exception {
-        heaps.forEach((heap) -> {
+        for (DHeap heap : heaps) {
             int size = 0;
             checkHeap(heap, size);
             for (Integer number : TEST_NUMBERS_LIST) {
@@ -65,7 +65,7 @@ public class DHeapTest {
                 size += 1;
                 checkHeap(heap, size);
             }
-        });
+        }
     }
 
 
@@ -84,12 +84,12 @@ public class DHeapTest {
 
     @Test
     public void testGet_Min() throws Exception {
-        heaps.forEach((heap) -> {
+        for (DHeap heap : heaps) {
             initHeap(heap);
             DHeap_Item min_item = heap.Get_Min();
             assertEquals((int) Collections.min(TEST_NUMBERS_LIST), min_item.getKey());
             assertEquals(0, min_item.getPos());
-        });
+        }
     }
 
     @Test
