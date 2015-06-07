@@ -66,11 +66,11 @@ public class DHeapTest {
         }
     }
 
-
-    public static void initHeap(DHeap heap) {
+    // This is used for tests that expect a heap with items, but shouldn't fail just because heap construction fails.
+    public static void initHeap(DHeap heap, Integer[] numbers) {
         try {
-            heap.arrayToHeap(TEST_NUMBERS);
-            checkHeap(heap, TEST_NUMBERS.length);
+            heap.arrayToHeap(numbers);
+            checkHeap(heap, numbers.length);
         } catch (Throwable e) {
             assumeNoException(e);
         }
@@ -79,7 +79,7 @@ public class DHeapTest {
     @Test
     public void testDelete_Min() throws Exception {
         for (DHeap heap : heaps) {
-            initHeap(heap);
+            initHeap(heap, TEST_NUMBERS);
             int size = heap.getSize();
 
             List<DHeap_Item> itemsBefore = new ArrayList<>(heap.getItems());
@@ -99,7 +99,7 @@ public class DHeapTest {
     @Test
     public void testGet_Min() throws Exception {
         for (DHeap heap : heaps) {
-            initHeap(heap);
+            initHeap(heap, TEST_NUMBERS);
             DHeap_Item min_item = heap.Get_Min();
             assertEquals((int) Collections.min(TEST_NUMBERS_LIST), min_item.getKey());
             assertEquals(0, min_item.getPos());
