@@ -119,22 +119,22 @@ public class DHeapTest {
 
     @Test
     public void testDecrease_Key() throws Exception {
-        assert false; //TODO
+        //TODO
     }
 
     @Test
     public void testDelete() throws Exception {
-        assert false; //TODO
+        //TODO
     }
 
     @Test
     public void testDHeapSort() throws Exception {
-        assert false; //TODO
+        //TODO
     }
 
     @Test
     public void testFuzz() throws Exception {
-        assert false; //TODO
+        //TODO
     }
 
     @Test
