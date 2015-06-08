@@ -111,6 +111,7 @@ public class DHeapTest {
             DHeap_Item min_item = heap.Get_Min();
             assertEquals((int) Collections.min(TEST_NUMBERS_LIST), min_item.getKey());
             assertEquals(0, min_item.getPos());
+            assertEquals(min_item, heap.Get_Min());
         }
     }
 
