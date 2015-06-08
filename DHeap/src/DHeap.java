@@ -98,29 +98,17 @@ public class DHeap {
      * satisfies the heap property or size == 0.
      */
     public boolean isHeap() {
-        return size == 0 || isSubHeap(0);
-    }
-
-    private boolean isSubHeap(int i) {
-        if (!hasChildren(i)) {
-            return true;
-        }
-
-        int start = child(i, 1);
-        int end = lastChildIndex(i);
-        for (int j = start; j <= end; j++) {
-            if (array[j].getKey() < array[i].getKey()) {
-                return false;
-            }
-            if (!isSubHeap(j)) {
+        for (int i = size - 1; i > 0; i--) {
+            if (array[i].getKey() < array[parent(i)].getKey()) {
                 return false;
             }
         }
-
         return true;
     }
 
+
     void checkHeap() {
+        assert size >= 0 && size <= max_size;
         assert isHeap();
         for (int i = 0; i < size; i++) {
             assert array[i].getPos() == i;
