@@ -1,7 +1,11 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assume.assumeNoException;
@@ -82,17 +86,21 @@ public class DHeapTest {
             initHeap(heap, TEST_NUMBERS);
             int size = heap.getSize();
 
-            List<DHeap_Item> itemsBefore = new ArrayList<>(heap.getItems());
-            heap.Delete_Min();
-            List<DHeap_Item> itemsAfter = new ArrayList<>(heap.getItems());
+            while (heap.getSize() > 0) {
+                List<DHeap_Item> itemsBefore = new ArrayList<>(heap.getItems());
+                heap.Delete_Min();
+                List<DHeap_Item> itemsAfter = new ArrayList<>(heap.getItems());
+                size -= 1;
 
-            checkHeap(heap, size - 1);
-            assertEquals(itemsBefore.size() - 1, itemsAfter.size());
+                checkHeap(heap, size);
+                assertEquals(itemsBefore.size() - 1, itemsAfter.size());
 
-            itemsBefore.removeAll(itemsAfter);
-            DHeap_Item deletedItem = itemsBefore.get(0);
-            assertEquals(0, deletedItem.getPos());
-            assertEquals((int) Collections.min(TEST_NUMBERS_LIST), deletedItem.getKey());
+                List<Integer> keysBefore = itemsBefore.stream().map(DHeap_Item::getKey).collect(Collectors.toList());
+                itemsBefore.removeAll(itemsAfter);
+                DHeap_Item deletedItem = itemsBefore.get(0);
+                assertEquals(0, deletedItem.getPos());
+                assertEquals((int) Collections.min(keysBefore), deletedItem.getKey());
+            }
         }
     }
 

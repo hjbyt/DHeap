@@ -211,9 +211,9 @@ public class DHeap {
      */
     public void Delete_Min() {
         assert size > 0;
+        setItem(0, array[size - 1]);
+        array[size - 1] = null;
         size -= 1;
-        setItem(0, array[size]);
-        array[size] = null;
         heapifyDown(0);
     }
 
