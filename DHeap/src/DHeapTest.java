@@ -24,6 +24,7 @@ public class DHeapTest {
         heaps = new ArrayList<>(NUMBER_OF_HEAPS);
         for (int i = 1; i <= NUMBER_OF_HEAPS; i++) {
             DHeap heap = new DHeap(i, MAX_SIZE);
+            checkHeap(heap, 0);
             heaps.add(heap);
         }
     }
@@ -41,7 +42,6 @@ public class DHeapTest {
     @Test
     public void testArrayToHeap() throws Exception {
         for (DHeap heap : heaps) {
-            checkHeap(heap, 0);
             heap.arrayToHeap(TEST_NUMBERS);
             checkHeap(heap, TEST_NUMBERS.length);
         }
