@@ -337,7 +337,7 @@ public class DHeap {
         return DHeapSort(array, 2);
     }
 
-    private static int[] DHeapSort(int[] array, int d) {
+    static int[] DHeapSort(int[] array, int d) {
         DHeap heap = new DHeap(d, array.length);
         heap.arrayToHeap(array);
 

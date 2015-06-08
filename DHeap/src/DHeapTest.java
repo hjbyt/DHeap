@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assume.assumeNoException;
 
@@ -21,8 +22,8 @@ public class DHeapTest {
     @Before
     public void setUp() throws Exception {
         heaps = new ArrayList<>(NUMBER_OF_HEAPS);
-        for (int i = 1; i <= NUMBER_OF_HEAPS; i++) {
-            DHeap heap = new DHeap(i, MAX_SIZE);
+        for (int d = 1; d <= NUMBER_OF_HEAPS; d++) {
+            DHeap heap = new DHeap(d, MAX_SIZE);
             checkHeap(heap, 0);
             heaps.add(heap);
         }
@@ -129,7 +130,15 @@ public class DHeapTest {
 
     @Test
     public void testDHeapSort() throws Exception {
-        //TODO
+        for (int d = 1; d <= NUMBER_OF_HEAPS; d++) {
+            int[] numbers = new int[TEST_NUMBERS.size()];
+            for (int i = 0; i < numbers.length; i++) {
+                numbers[i] = TEST_NUMBERS.get(i);
+            }
+            int[] sorted = DHeap.DHeapSort(numbers.clone(), d);
+            Arrays.sort(numbers);
+            assertArrayEquals(numbers, sorted);
+        }
     }
 
     @Test
