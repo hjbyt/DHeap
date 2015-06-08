@@ -44,6 +44,10 @@ public class DHeap {
         for (int i = 0; i < size; i++) {
             setItem(i, array1[i]);
         }
+        for (int i = size; i < max_size; i++) {
+            // Clear old values to allow GC to collect them.
+            array[i] = null;
+        }
         heapify();
     }
 
@@ -218,6 +222,7 @@ public class DHeap {
         assert size > 0;
         size -= 1;
         setItem(0, array[size]);
+        array[size] = null;
         heapifyDown(0);
     }
 
@@ -311,6 +316,8 @@ public class DHeap {
     public void Delete(DHeap_Item item) {
         assert item != null;
         assert item.getPos() >= 0 && item.getPos() < size;
+        assert array[item.getPos()] == item;
+        //TODO: can we simply delete it like we do in delete-min? it should be more efficient
         int i = item.getPos();
         while (i != 0) {
             int p = parent(i);
@@ -326,7 +333,7 @@ public class DHeap {
      */
     public static int[] DHeapSort(int[] array) {
         assert array != null;
-        //TODO: is it okay to simply use d=2?
+        //TODO: is it ok to simply use d=2?
         return DHeapSort(array, 2);
     }
 
