@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * D-Heap
@@ -51,10 +52,10 @@ public class DHeap {
         heapify();
     }
 
-    public void arrayToHeap(Integer[] numbers) {
-        DHeap_Item[] items = new DHeap_Item[numbers.length];
-        for (int i = 0; i < numbers.length; i++) {
-            items[i] = newItem(numbers[i]);
+    public void arrayToHeap(List<Integer> numbers) {
+        DHeap_Item[] items = new DHeap_Item[numbers.size()];
+        for (int i = 0; i < numbers.size(); i++) {
+            items[i] = newItem(numbers.get(i));
         }
         arrayToHeap(items);
     }

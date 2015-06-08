@@ -12,8 +12,7 @@ import static org.junit.Assume.assumeNoException;
 
 public class DHeapTest {
 
-    private static final Integer[] TEST_NUMBERS = {1, 5, 2, 7, 9, 4, 6, 2, 4, 1, 6};
-    private static final List<Integer> TEST_NUMBERS_LIST = Arrays.asList(TEST_NUMBERS);
+    private static final List<Integer> TEST_NUMBERS = Arrays.asList(1, 5, 2, 7, 9, 4, 6, 2, 4, 1, 6);
     private static final int NUMBER_OF_HEAPS = 20;
     private static final int MAX_SIZE = 5000;
 
@@ -42,8 +41,11 @@ public class DHeapTest {
     @Test
     public void testArrayToHeap() throws Exception {
         for (DHeap heap : heaps) {
-            heap.arrayToHeap(TEST_NUMBERS);
-            checkHeap(heap, TEST_NUMBERS.length);
+            for (int i = 0; i <= TEST_NUMBERS.size(); i++) {
+                List<Integer> numbers = TEST_NUMBERS.subList(0, i);
+                heap.arrayToHeap(numbers);
+                checkHeap(heap, numbers.size());
+            }
         }
     }
 
@@ -62,7 +64,7 @@ public class DHeapTest {
         for (DHeap heap : heaps) {
             int size = 0;
             checkHeap(heap, size);
-            for (Integer number : TEST_NUMBERS_LIST) {
+            for (Integer number : TEST_NUMBERS) {
                 heap.Insert(number);
                 size += 1;
                 checkHeap(heap, size);
@@ -71,10 +73,10 @@ public class DHeapTest {
     }
 
     // This is used for tests that expect a heap with items, but shouldn't fail just because heap construction fails.
-    public static void initHeap(DHeap heap, Integer[] numbers) {
+    public static void initHeap(DHeap heap, List<Integer> numbers) {
         try {
             heap.arrayToHeap(numbers);
-            checkHeap(heap, numbers.length);
+            checkHeap(heap, numbers.size());
         } catch (Throwable e) {
             assumeNoException(e);
         }
@@ -109,7 +111,7 @@ public class DHeapTest {
         for (DHeap heap : heaps) {
             initHeap(heap, TEST_NUMBERS);
             DHeap_Item min_item = heap.Get_Min();
-            assertEquals((int) Collections.min(TEST_NUMBERS_LIST), min_item.getKey());
+            assertEquals((int) Collections.min(TEST_NUMBERS), min_item.getKey());
             assertEquals(0, min_item.getPos());
             assertEquals(min_item, heap.Get_Min());
         }
