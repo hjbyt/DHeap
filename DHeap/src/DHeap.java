@@ -52,6 +52,14 @@ public class DHeap {
         heapify();
     }
 
+    public void arrayToHeap(int[] numbers) {
+        DHeap_Item[] items = new DHeap_Item[numbers.length];
+        for (int i = 0; i < numbers.length; i++) {
+            items[i] = newItem(numbers[i]);
+        }
+        arrayToHeap(items);
+    }
+
     public void arrayToHeap(List<Integer> numbers) {
         DHeap_Item[] items = new DHeap_Item[numbers.size()];
         for (int i = 0; i < numbers.size(); i++) {
@@ -187,7 +195,7 @@ public class DHeap {
     }
 
     private DHeap_Item newItem(int number) {
-        return new DHeap_Item(Integer.toString(number), number);
+        return new DHeap_Item(null, number);
     }
 
     private void heapifyUp(int i) {
@@ -331,15 +339,9 @@ public class DHeap {
 
     private static int[] DHeapSort(int[] array, int d) {
         DHeap heap = new DHeap(d, array.length);
-        DHeap_Item[] items = new DHeap_Item[array.length];
+        heap.arrayToHeap(array);
+
         int[] sorted = new int[array.length];
-
-        for (int i = 0; i < array.length; i++) {
-            DHeap_Item item = new DHeap_Item(null, array[i]);
-            items[i] = item;
-        }
-        heap.arrayToHeap(items);
-
         for (int i = 0; i < array.length; i++) {
             sorted[i] = heap.popMin().getKey();
         }
