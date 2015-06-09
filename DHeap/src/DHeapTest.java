@@ -127,9 +127,24 @@ public class DHeapTest {
         //TODO
     }
 
+    private DHeap_Item getRandomItem(DHeap heap) {
+        List<DHeap_Item> heapContents = heap.getItems().stream().collect(Collectors.toList());
+        Collections.shuffle(heapContents);
+        return heapContents.get(0);
+    }
+
     @Test
     public void testDelete() throws Exception {
-        //TODO
+        Random rand = new Random();
+        for (DHeap heap : heaps) {
+            heap.arrayToHeap(getRandomArray(rand.nextInt(MAX_SIZE)));
+            while (0 < heap.getSize()) {
+                // Note - We can't generate the list once because things might move around and we would have thr wrong
+                // Note - item position
+                DHeap_Item itemToDelete = getRandomItem(heap);
+                heap.Delete(itemToDelete);
+            }
+        }
     }
 
     private static int[] copyArray(Integer[] arr) {
