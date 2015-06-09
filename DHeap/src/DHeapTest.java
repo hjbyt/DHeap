@@ -20,6 +20,7 @@ public class DHeapTest {
     private static final List<Integer> TEST_NUMBERS = Arrays.asList(1, 5, 2, 7, 9, 4, 6, 2, 4, 1, 6);
     private static final int NUMBER_OF_HEAPS = 20;
     private static final int MAX_SIZE = 5000;
+    private static final int MAX_CONTENT_VALUE = 20000;
 
     List<DHeap> heaps;
 
@@ -57,11 +58,13 @@ public class DHeapTest {
     @Test
     public void testParent() throws Exception {
         //TODO?
+        // TODO - Also test when asking the root for a praent
     }
 
     @Test
     public void testChild() throws Exception {
         //TODO?
+        // TODO - Check what that leaves return correct values
     }
 
     @Test
@@ -123,8 +126,29 @@ public class DHeapTest {
     }
 
     @Test
+    public void testGet_Min_Fuzz() throws Exception {
+        Random rand = new Random();
+        for (DHeap heap : heaps) {
+            int[] contents = getRandomArray(rand.nextInt(MAX_SIZE));
+            heap.arrayToHeap(contents);
+            Arrays.sort(contents);
+            assertEquals(heap.Get_Min().getKey(), contents[0]);
+        }
+    }
+
+    @Test
     public void testDecrease_Key() throws Exception {
-        //TODO
+        Random rand = new Random();
+        for (DHeap heap : heaps) {
+            heap.arrayToHeap(getRandomArray(rand.nextInt(MAX_SIZE)));
+            for (int i = 0; i < 500; i++) {
+                assert heap.isHeap();
+                DHeap_Item itemToChange = getRandomItem(heap);
+                int delta = rand.nextInt(MAX_CONTENT_VALUE / 4);
+                heap.Decrease_Key(itemToChange, delta);
+                assert heap.isHeap();
+            }
+        }
     }
 
     private DHeap_Item getRandomItem(DHeap heap) {
@@ -165,7 +189,7 @@ public class DHeapTest {
         Random rand = new Random();
         int[] arr = new int[size];
         for (int i = 0; i < size; i++) {
-            arr[i] = rand.nextInt();
+            arr[i] = rand.nextInt(MAX_CONTENT_VALUE);
         }
         return arr;
     }
