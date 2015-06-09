@@ -129,7 +129,7 @@ public class DHeapTest {
     public void testGet_Min_Fuzz() throws Exception {
         Random rand = new Random();
         for (DHeap heap : heaps) {
-            int[] contents = getRandomArray(rand.nextInt(MAX_SIZE));
+            int[] contents = getRandomArray(rand.nextInt(MAX_SIZE), MAX_CONTENT_VALUE);
             heap.arrayToHeap(contents);
             Arrays.sort(contents);
             assertEquals(heap.Get_Min().getKey(), contents[0]);
@@ -140,7 +140,7 @@ public class DHeapTest {
     public void testDecrease_Key() throws Exception {
         Random rand = new Random();
         for (DHeap heap : heaps) {
-            heap.arrayToHeap(getRandomArray(rand.nextInt(MAX_SIZE)));
+            heap.arrayToHeap(getRandomArray(rand.nextInt(MAX_SIZE), MAX_CONTENT_VALUE));
             for (int i = 0; i < 500; i++) {
                 assert heap.isHeap();
                 DHeap_Item itemToChange = getRandomItem(heap);
@@ -161,7 +161,7 @@ public class DHeapTest {
     public void testDelete() throws Exception {
         Random rand = new Random();
         for (DHeap heap : heaps) {
-            heap.arrayToHeap(getRandomArray(rand.nextInt(MAX_SIZE)));
+            heap.arrayToHeap(getRandomArray(rand.nextInt(MAX_SIZE), MAX_CONTENT_VALUE));
             while (0 < heap.getSize()) {
                 // Note - We can't generate the list once because things might move around and we would have thr wrong
                 // Note - item position
@@ -185,11 +185,11 @@ public class DHeapTest {
         assertArrayEquals(ourSorted, javaSorted);
     }
 
-    private static int[] getRandomArray(int size) {
+    private static int[] getRandomArray(int size, int max_value) {
         Random rand = new Random();
         int[] arr = new int[size];
         for (int i = 0; i < size; i++) {
-            arr[i] = rand.nextInt(MAX_CONTENT_VALUE);
+            arr[i] = rand.nextInt(max_value);
         }
         return arr;
     }
@@ -203,7 +203,7 @@ public class DHeapTest {
     public void testDHeapSort_Fuzz() throws Exception {
         Random rand = new Random();
         for (int i = 0; i <= 100; i++) {
-            testSortArray(getRandomArray(i));
+            testSortArray(getRandomArray(i, MAX_CONTENT_VALUE));
         }
     }
 
@@ -212,8 +212,42 @@ public class DHeapTest {
         //TODO
     }
 
+
+    private void ourHeapSortCopy(DHeap heap, int m) {
+        // Note - here we copy some code from the DHeapSort because their requested API
+        // Note - doesn't allow us to do what they ask us to measure...
+        // Note - We also don't care about the result, just the deletion of keys
+        for (int i = 0; i < m; i++) {
+            heap.Delete_Min();
+        }
+    }
+
     @Test
     public void testMeasurements() throws Exception {
-        //TODO
+        int TEST_MAX_KEY_VALUE = 1000;
+        for (int m : new int[] {1000, 10000, 100000}) {
+            for (int d : new int[]{2,3,4}) {
+                DHeap heap = new DHeap(d, m);
+                int[] arr = getRandomArray(m, TEST_MAX_KEY_VALUE);
+                heap.arrayToHeap(arr);
+                ourHeapSortCopy(heap, m);
+                System.out.println("Number of comparisons for insertions m:=" + m + " d:= " + d + " comparisons:=" + heap.compare_count);
+            }
+        }
+        for (int d : new int[]{2,3,4}) {
+            for (int x : new int[]{1, 100, 1000}) {
+                int[] arr = getRandomArray(100000, TEST_MAX_KEY_VALUE);
+                DHeap_Item[] items = Arrays.stream(arr).mapToObj(i -> new DHeap_Item(null, i)).toArray(DHeap_Item[]::new);
+                DHeap heap = new DHeap(d, arr.length);
+                for (DHeap_Item item : items) {
+                    heap.Insert(item);
+                }
+                heap.compare_count = 0; // Note - We only want the Decrease-Key comparisons
+                for (DHeap_Item item : items) {
+                    heap.Decrease_Key(item, x);
+                }
+                System.out.println("Number of comparisons for Decrease_Key d:= " + d + " x:= " + x + " comparisons:= " + heap.compare_count);
+            }
+        }
     }
 }

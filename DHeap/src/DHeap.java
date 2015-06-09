@@ -8,8 +8,11 @@ import java.util.List;
 
 public class DHeap {
 
-    private int size, max_size, d;
+    private int size;
+    private int max_size;
+    private int d;
     private DHeap_Item[] array;
+    int compare_count; // Package local for testing
 
     // Constructor
     // m_d >= 2, m_size > 0
@@ -18,6 +21,7 @@ public class DHeap {
         d = m_d;
         array = new DHeap_Item[max_size];
         size = 0;
+        compare_count = 0;
     }
 
     // For testing
@@ -49,6 +53,7 @@ public class DHeap {
             // Clear old values to allow GC to collect them.
             array[i] = null;
         }
+        compare_count = 0;
         heapify();
     }
 
@@ -192,6 +197,7 @@ public class DHeap {
     private void heapifyUp(int i) {
         while (i != 0) {
             int p = parent(i);
+            compare_count++;
             if (array[i].getKey() < array[p].getKey()) {
                 swapItems(i, p);
                 i = p;
@@ -220,6 +226,7 @@ public class DHeap {
     private void heapifyDown(int i) {
         while (hasChildren(i)) {
             int min = minChildIndex(i);
+            compare_count++;
             if (array[min].getKey() < array[i].getKey()) {
                 swapItems(i, min);
                 i = min;
