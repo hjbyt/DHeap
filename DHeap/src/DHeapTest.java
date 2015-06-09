@@ -5,11 +5,19 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assume.assumeNoException;
 
 public class DHeapTest {
 
-    private static final Integer[] TEST_NUMBERS = {1, 5, 2, 7, 9, 4, 6, 2, 4, 1, 6};
-    private static final List<Integer> TEST_NUMBERS_LIST = Arrays.asList(TEST_NUMBERS);
+    private static final List<Integer> TEST_NUMBERS = Arrays.asList(1, 5, 2, 7, 9, 4, 6, 2, 4, 1, 6);
     private static final int NUMBER_OF_HEAPS = 20;
     private static final int MAX_SIZE = 5000;
 
@@ -18,20 +26,14 @@ public class DHeapTest {
     @Before
     public void setUp() throws Exception {
         heaps = new ArrayList<>(NUMBER_OF_HEAPS);
-        for (int i = 1; i <= NUMBER_OF_HEAPS; i++) {
-            DHeap heap = new DHeap(i, MAX_SIZE);
+        for (int d = 1; d <= NUMBER_OF_HEAPS; d++) {
+            DHeap heap = new DHeap(d, MAX_SIZE);
+            checkHeap(heap, 0);
             heaps.add(heap);
         }
     }
 
-    private void repeatForAllHeaps(Consumer<DHeap> function) {
-        for (int i = 0; i < NUMBER_OF_HEAPS; i++) {
-            DHeap heap = heaps.get(i);
-            function.accept(heap);
-        }
-    }
-
-    private void checkHeap(DHeap heap, int expectedSize) {
+    private static void checkHeap(DHeap heap, int expectedSize) {
         try {
             assertEquals(expectedSize, heap.getSize());
             heap.checkHeap();
@@ -43,12 +45,13 @@ public class DHeapTest {
 
     @Test
     public void testArrayToHeap() throws Exception {
-        repeatForAllHeaps((heap) -> {
-            checkHeap(heap, 0);
-            heap.arrayToHeap(TEST_NUMBERS);
-            checkHeap(heap, TEST_NUMBERS.length);
-        });
-
+        for (DHeap heap : heaps) {
+            for (int i = 0; i <= TEST_NUMBERS.size(); i++) {
+                List<Integer> numbers = TEST_NUMBERS.subList(0, i);
+                heap.arrayToHeap(numbers);
+                checkHeap(heap, numbers.size());
+            }
+        }
     }
 
     @Test
@@ -63,40 +66,70 @@ public class DHeapTest {
 
     @Test
     public void testInsert() throws Exception {
-        repeatForAllHeaps((heap) -> {
+        for (DHeap heap : heaps) {
             int size = 0;
             checkHeap(heap, size);
-            for (Integer number : TEST_NUMBERS_LIST) {
+            for (Integer number : TEST_NUMBERS) {
                 heap.Insert(number);
                 size += 1;
                 checkHeap(heap, size);
             }
-        });
+        }
+    }
+
+    // This is used for tests that expect a heap with items, but shouldn't fail just because heap construction fails.
+    public static void initHeap(DHeap heap, List<Integer> numbers) {
+        try {
+            heap.arrayToHeap(numbers);
+            checkHeap(heap, numbers.size());
+        } catch (Throwable e) {
+            assumeNoException(e);
+        }
     }
 
     @Test
     public void testDelete_Min() throws Exception {
-        assert false; //TODO
+        for (DHeap heap : heaps) {
+            initHeap(heap, TEST_NUMBERS);
+            int size = heap.getSize();
+
+            while (heap.getSize() > 0) {
+                List<DHeap_Item> itemsBefore = new ArrayList<>(heap.getItems());
+                heap.Delete_Min();
+                List<DHeap_Item> itemsAfter = new ArrayList<>(heap.getItems());
+                size -= 1;
+
+                checkHeap(heap, size);
+                assertEquals(itemsBefore.size() - 1, itemsAfter.size());
+
+                List<Integer> keysBefore = itemsBefore.stream().map(DHeap_Item::getKey).collect(Collectors.toList());
+                itemsBefore.removeAll(itemsAfter);
+                DHeap_Item deletedItem = itemsBefore.get(0);
+                assertEquals(0, deletedItem.getPos());
+                assertEquals((int) Collections.min(keysBefore), deletedItem.getKey());
+            }
+        }
     }
 
     @Test
     public void testGet_Min() throws Exception {
-        repeatForAllHeaps((heap) -> {
-            heap.arrayToHeap(TEST_NUMBERS);
+        for (DHeap heap : heaps) {
+            initHeap(heap, TEST_NUMBERS);
             DHeap_Item min_item = heap.Get_Min();
-            assertEquals((int)Collections.min(TEST_NUMBERS_LIST), min_item.getKey());
+            assertEquals((int) Collections.min(TEST_NUMBERS), min_item.getKey());
             assertEquals(0, min_item.getPos());
-        });
+            assertEquals(min_item, heap.Get_Min());
+        }
     }
 
     @Test
     public void testDecrease_Key() throws Exception {
-        assert false; //TODO
+        //TODO
     }
 
     @Test
     public void testDelete() throws Exception {
-        assert false; //TODO
+        //TODO
     }
 
     private static int[] copyArray(Integer[] arr) {
@@ -137,7 +170,7 @@ public class DHeapTest {
 
     @Test
     public void testFuzz() throws Exception {
-        assert false; //TODO
+        //TODO
     }
 
     @Test

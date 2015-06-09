@@ -1,3 +1,7 @@
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * D-Heap
  */
@@ -14,6 +18,11 @@ public class DHeap {
         d = m_d;
         array = new DHeap_Item[max_size];
         size = 0;
+    }
+
+    // For testing
+    Collection<DHeap_Item> getItems() {
+        return Arrays.asList(array).subList(0, size);
     }
 
     // Getter for size
@@ -36,10 +45,14 @@ public class DHeap {
         for (int i = 0; i < size; i++) {
             setItem(i, array1[i]);
         }
+        for (int i = size; i < max_size; i++) {
+            // Clear old values to allow GC to collect them.
+            array[i] = null;
+        }
         heapify();
     }
 
-    public void arrayToHeap(Integer[] numbers) {
+    public void arrayToHeap(int[] numbers) {
         DHeap_Item[] items = new DHeap_Item[numbers.length];
         for (int i = 0; i < numbers.length; i++) {
             items[i] = newItem(numbers[i]);
@@ -47,9 +60,20 @@ public class DHeap {
         arrayToHeap(items);
     }
 
+    public void arrayToHeap(List<Integer> numbers) {
+        DHeap_Item[] items = new DHeap_Item[numbers.size()];
+        for (int i = 0; i < numbers.size(); i++) {
+            items[i] = newItem(numbers.get(i));
+        }
+        arrayToHeap(items);
+    }
+
     private void heapify() {
-        //TODO: optimize to start the first internal node?
-        for (int i = size - 1; i >= 0; i--) {
+        if (size <= 1) {
+            return;
+        }
+        int last_inner_node_index = parent(size - 1);
+        for (int i = last_inner_node_index; i >= 0; i--) {
             heapifyDown(i);
         }
     }
@@ -83,29 +107,17 @@ public class DHeap {
      * satisfies the heap property or size == 0.
      */
     public boolean isHeap() {
-        return size == 0 || isSubHeap(0);
-    }
-
-    private boolean isSubHeap(int i) {
-        if (!hasChildren(i)) {
-            return true;
-        }
-
-        int start = child(i, 1);
-        int end = lastChildIndex(i);
-        for (int j = start; j <= end; j++) {
-            if (array[j].getKey() < array[i].getKey()) {
-                return false;
-            }
-            if (!isSubHeap(j)) {
+        for (int i = size - 1; i > 0; i--) {
+            if (array[i].getKey() < array[parent(i)].getKey()) {
                 return false;
             }
         }
-
         return true;
     }
 
+
     void checkHeap() {
+        assert size >= 0 && size <= max_size;
         assert isHeap();
         for (int i = 0; i < size; i++) {
             assert array[i].getPos() == i;
@@ -174,7 +186,7 @@ public class DHeap {
     }
 
     private DHeap_Item newItem(int number) {
-        return new DHeap_Item(Integer.toString(number), number);
+        return new DHeap_Item(null, number);
     }
 
     private void heapifyUp(int i) {
@@ -199,8 +211,9 @@ public class DHeap {
      */
     public void Delete_Min() {
         assert size > 0;
+        setItem(0, array[size - 1]);
+        array[size - 1] = null;
         size -= 1;
-        setItem(0, array[size]);
         heapifyDown(0);
     }
 
@@ -294,6 +307,8 @@ public class DHeap {
     public void Delete(DHeap_Item item) {
         assert item != null;
         assert item.getPos() >= 0 && item.getPos() < size;
+        assert array[item.getPos()] == item;
+        //TODO: can we simply delete it like we do in delete-min? it should be more efficient
         int i = item.getPos();
         while (i != 0) {
             int p = parent(i);
@@ -309,21 +324,15 @@ public class DHeap {
      */
     public static int[] DHeapSort(int[] array) {
         assert array != null;
-        //TODO: is it okay to simply use d=2?
+        //TODO: is it ok to simply use d=2?
         return DHeapSort(array, 2);
     }
 
-    private static int[] DHeapSort(int[] array, int d) {
+    static int[] DHeapSort(int[] array, int d) {
         DHeap heap = new DHeap(d, array.length);
-        DHeap_Item[] items = new DHeap_Item[array.length];
+        heap.arrayToHeap(array);
+
         int[] sorted = new int[array.length];
-
-        for (int i = 0; i < array.length; i++) {
-            DHeap_Item item = new DHeap_Item(null, array[i]);
-            items[i] = item;
-        }
-        heap.arrayToHeap(items);
-
         for (int i = 0; i < array.length; i++) {
             sorted[i] = heap.popMin().getKey();
         }
