@@ -157,7 +157,7 @@ public class DHeapTest {
 
     @Test
     public void testDHeapSort() throws Exception {
-        testSortArray(copyArray(TEST_NUMBERS));
+        testSortArray(copyArray(TEST_NUMBERS.toArray(new Integer[TEST_NUMBERS.size()])));
     }
 
     @Test
