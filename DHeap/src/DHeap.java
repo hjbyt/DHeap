@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -25,7 +24,7 @@ public class DHeap {
     }
 
     // For testing
-    Collection<DHeap_Item> getItems() {
+    List<DHeap_Item> getItems() {
         return Arrays.asList(array).subList(0, size);
     }
 
