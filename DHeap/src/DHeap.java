@@ -237,7 +237,7 @@ public class DHeap {
     }
 
     private void setItem(int i, DHeap_Item item) {
-        assert i >= 0 && i <= size;
+        assert i >= 0 && i < size;
         array[i] = item;
         array[i].setPos(i);
     }
