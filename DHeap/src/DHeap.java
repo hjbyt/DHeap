@@ -24,23 +24,31 @@ public class DHeap {
     }
 
     // For testing
+
+    /**
+     * Returns a list of all the items in the heap
+     * @return All the items in the heap, as a list
+     */
     List<DHeap_Item> getItems() {
         return Arrays.asList(array).subList(0, size);
     }
 
-    // Getter for size
+    /**
+     * Returns the size of the heap
+     * @return The current number of elements in the heap
+     */
     public int getSize() {
         return size;
     }
 
     /**
-     * public void arrayToHeap()
-     * <p>
      * The function builds a new heap from the given array.
-     * Previous data of the heap should be erased.
-     * preconidtion: array1.length() <= max_size
+     * Previous data of the heap will be erased.
+     * The running time is O(n), where n = numbers.size()
+     * preconidtion: array1.length <= max_size
      * postcondition: isHeap()
      * size = array.length()
+     * @param array1 An array of all the items to insert into the heap
      */
     public void arrayToHeap(DHeap_Item[] array1) {
         assert array1.length <= max_size;
@@ -56,6 +64,14 @@ public class DHeap {
         heapify();
     }
 
+    /**
+     * Make a heap from an array of numbers. Erases the current contents of
+     * the heap.
+     * The running time is O(n), where n = numbers.length
+     * precondition: numbers.length <= max_size
+     * postcondition: isHeap(); size = array.length();
+     * @param numbers The numbers to insert into the heap
+     */
     public void arrayToHeap(int[] numbers) {
         DHeap_Item[] items = new DHeap_Item[numbers.length];
         for (int i = 0; i < numbers.length; i++) {
@@ -64,6 +80,14 @@ public class DHeap {
         arrayToHeap(items);
     }
 
+    /**
+     * Make a heap from a list of Integers. Erases the current contents of
+     * the heap.
+     * The running time is O(n), where n = numbers.size()
+     * precondition: numbers.size() <= max_size
+     * postcondition: isHeap(); size = array.length();
+     * @param numbers The numbers to insert into the heap
+     */
     public void arrayToHeap(List<Integer> numbers) {
         DHeap_Item[] items = new DHeap_Item[numbers.size()];
         for (int i = 0; i < numbers.size(); i++) {
@@ -72,6 +96,11 @@ public class DHeap {
         arrayToHeap(items);
     }
 
+    /**
+     * Makes sure the internal array is structured like a heap, moving elements
+     * where necessary.
+     * The running time is O(n), where n = size
+     */
     private void heapify() {
         if (size <= 1) {
             return;
@@ -82,6 +111,10 @@ public class DHeap {
         }
     }
 
+    /**
+     * Prints the heap as a tree. Used internally for testing.
+     * Running time is O(n) where n = size
+     */
     public void printTree() {
         if (size > 0) {
             printTree(0, "", true);
@@ -90,9 +123,17 @@ public class DHeap {
         }
     }
 
-    // Note: adapted from http://stackoverflow.com/a/8948691
+    /**
+     * The internal method that prints a part of the heap as a subtree
+     * Note: adapted from http://stackoverflow.com/a/8948691
+     * The running time is O(n) where n = size
+     * @param i The index from which to start printing
+     * @param prefix The prefix used in order to align all all the prints
+     * @param isTail Says wheather the current node is it's father's last child
+     */
     private void printTree(int i, String prefix, boolean isTail) {
-        System.out.println(prefix + (isTail ? "+-- " : "+-- ") + array[i].toString());
+        System.out.println(prefix + (isTail ? "+-- " : "+-- ") +
+                array[i].toString());
 
         if (hasChildren(i)) {
             int start = child(i, 1);
@@ -100,15 +141,17 @@ public class DHeap {
             for (int j = start; j < end; j++) {
                 printTree(j, prefix + (isTail ? "    " : "|   "), false);
             }
-            printTree(lastChildIndex(i), prefix + (isTail ? "    " : "|   "), true);
+            printTree(lastChildIndex(i),
+                    prefix + (isTail ? "    " : "|   "), true);
         }
     }
 
     /**
      * public boolean isHeap()
-     * <p>
-     * The function returns true if and only if the D-ary tree rooted at array[0]
-     * satisfies the heap property or size == 0.
+     * The function returns true if and only if the D-ary tree rooted at
+     * array[0] satisfies the heap property or size == 0.
+     * Running time is O(n) where n = size
+     * @return If the array satisfies the properties of a D-ary tree
      */
     public boolean isHeap() {
         for (int i = size - 1; i > 0; i--) {
@@ -119,7 +162,11 @@ public class DHeap {
         return true;
     }
 
-
+    /**
+     * An internal method, used to assert the internal array satisfies the
+     * properties of a D-ary heap, and a few more internal tests
+     * Running time is O(n) where n = size
+     */
     void checkHeap() {
         assert size >= 0 && size <= max_size;
         assert isHeap();
@@ -129,26 +176,40 @@ public class DHeap {
     }
 
     /**
-     * public static int parent(i), child(i,k)
-     * (2 methods)
-     * <p>
+     * The methods compute the index of the parent for the heap element at
+     * the given offset
+     * The running time is O(1)
      * precondition: i >= 0
-     * <p>
-     * The methods compute the index of the parent and the k-th child of
-     * vertex i in a complete D-ary tree stored in an array. 1 <= k <= d.
-     * Note that indices of arrays in Java start from 0.
+     * @param i The element who's parent's offset is requested
+     * @return The index of the parant for the given element
      */
     public int parent(int i) {
         assert i > 0;
         return (i - 1) / d;
     }
 
+    /**
+     * The methods compute the index of the parent and the k-th child of
+     * vertex i in a complete D-ary tree stored in an array. 1 <= k <= d.
+     * Note that indices of arrays in Java start from 0.
+     * The running time is O(1)
+     * precondition: i >= 0
+     * @param i The vertex who's child is requested
+     * @param k The requested child's index in relations to the parent
+     * @return The index of the requested child
+     */
     public int child(int i, int k) {
         assert i >= 0;
         assert k >= 1 && k <= d;
         return (d * i) + k;
     }
 
+    /**
+     * Returns the number of children a specific vertex has
+     * Runs in O(1) time
+     * @param i The vertex we want to get the number of children it has
+     * @return The number of children the given vertex has
+     */
     private int childrenCount(int i) {
         int c = child(i, 1);
         if (c >= size) {
@@ -222,6 +283,13 @@ public class DHeap {
         heapifyDown(0);
     }
 
+    /**
+     * Makes sure the elements in the underlying array maintain the
+     * heap property, under a specific node in the heap, swaping elements
+     * if needed
+     * The runing time is O(logn) where n = size
+     * @param i The node from which to start the verification
+     */
     private void heapifyDown(int i) {
         while (hasChildren(i)) {
             int min = minChildIndex(i);

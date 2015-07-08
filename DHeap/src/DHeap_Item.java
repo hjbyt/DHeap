@@ -1,4 +1,3 @@
-//TODO: revert this to the orignial??
 public class DHeap_Item {
 
     private String name;
