@@ -60,40 +60,11 @@ public class DHeapTest {
         }
     }
 
-    private void testInternalChild(DHeap heap, int startingNode, int[] nodeCount) {
-        int childrenCount = heap.childrenCount(startingNode);
-        for (int i = 0; i < childrenCount; i++) {
-            int child = heap.child(startingNode, i);
-            nodeCount[child]++;
-            nodeCount[startingNode]++;
-            testInternalChild(heap, child, nodeCount);
-        }
-    }
-
-    private void testInternalParent(DHeap heap, int[] nodeCount) {
-        heap.getItems().stream().mapToInt(DHeap_Item::getKey).forEach(index -> nodeCount[heap.parent(index)]-- );
-    }
-
     @Test
-    public void testParentChild() throws Exception {
-        for (DHeap heap : heaps) {
-            /* Note - The way this test works is as follows: for each node we mark it, and all
-             * it's children in an array, and count how many times each node apears in this way
-             * (we cound once for the node's parent, and again once for each child it has). Then,
-             * we run over all the nodes and remove one count from them. Thus, in the end, all
-             * nodes should have a count of zero, and that way we know that it's at least balanced
-              * (even though the test doesn't check the desired logic, it makes sure all the edge
-              * cases are ok).
-             */
-
-            int[] nodeCount = new int[heap.getSize()];
-            int[] emptyArray = new int[heap.getSize()];
-            Arrays.fill(nodeCount, 0);
-            Arrays.fill(emptyArray, 0);
-            testInternalChild(heap, 0, nodeCount);
-            testInternalParent(heap, nodeCount);
-            Assert.assertArrayEquals(nodeCount, emptyArray);
-        }
+    public void testChildParent() {
+        // TODO - Think about how to test these methods
+        // TODO - Need to make sure that calling "parent" on the root is ok, and calling "child" on a leaf is also ok
+        // Maybe, it shouldn't be ok, but we should at least make it explicitly wrong to do so
     }
 
     @Test

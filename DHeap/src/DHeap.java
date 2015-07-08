@@ -222,22 +222,34 @@ public class DHeap {
         return d;
     }
 
+    /**
+     * Says if a certain vertex has any children
+     * The running time is O(1)
+     * @param i The vertex to check
+     * @return If the vertex has any children
+     */
     private boolean hasChildren(int i) {
         return childrenCount(i) > 0;
     }
 
+    /**
+     * Returns the index of the last child of the checked vertex
+     * The running time is O(1)
+     * @param i The vertex to check
+     * @return The index of the last child of the tested vertex
+     */
     private int lastChildIndex(int i) {
         return child(i, childrenCount(i));
     }
 
     /**
-     * public void Insert(DHeap_Item item)
-     * <p>
+     * Inserts an item into the heap
+     * The running time is O(logn) where n = size
      * precondition: item != null
      * isHeap()
      * size < max_size
-     * <p>
      * postcondition: isHeap()
+     * @param item The heap item to insert
      */
     public void Insert(DHeap_Item item) {
         assert item != null;
@@ -247,14 +259,36 @@ public class DHeap {
         heapifyUp(size - 1);
     }
 
+    /**
+     * Inserts an item into the heap
+     * The running time is O(logn) where n = size
+     * precondition: item != null
+     * isHeap()
+     * size < max_size
+     * postcondition: isHeap()
+     * @param number The number to insert to the heap (as a heap item)
+     */
     public void Insert(int number) {
         Insert(newItem(number));
     }
 
+    /**
+     * Creates a new DHeap_Item from a number, to insert it into the heap
+     * Runs in O(1)
+     * @param number The number to wrap
+     * @return The DHeap_Item wrapping the number
+     */
     private DHeap_Item newItem(int number) {
         return new DHeap_Item(null, number);
     }
 
+    /**
+     * Makes sure the elements in the underlying array maintain the
+     * heap property, under a specific node in the heap, swapping elements
+     * if needed
+     * The running time is O(logn) where n = size
+     * @param i The heap index to start the process from
+     */
     private void heapifyUp(int i) {
         while (i != 0) {
             int p = parent(i);
@@ -269,11 +303,10 @@ public class DHeap {
     }
 
     /**
-     * public void Delete_Min()
-     * <p>
+     Deletes the smallest element from the heap.
+     The running time is O(logn) where n = size
      * precondition: size > 0
      * isHeap()
-     * <p>
      * postcondition: isHeap()
      */
     public void Delete_Min() {
@@ -286,9 +319,9 @@ public class DHeap {
 
     /**
      * Makes sure the elements in the underlying array maintain the
-     * heap property, under a specific node in the heap, swaping elements
+     * heap property, under a specific node in the heap, swapping elements
      * if needed
-     * The runing time is O(logn) where n = size
+     * The running time is O(logn) where n = size
      * @param i The node from which to start the verification
      */
     private void heapifyDown(int i) {
@@ -304,19 +337,38 @@ public class DHeap {
         }
     }
 
+    /**
+     * Changes the heap's internal structures (all the relevant ones) to insert
+     * a DHeap_Item element into the specified position, and make sure that we
+     * are allowed to do so
+     * The running time is O(1)
+     * @param i The index at which to set the item
+     * @param item The item to put in the intenal array
+     */
     private void setItem(int i, DHeap_Item item) {
         assert i >= 0 && i < size;
         array[i] = item;
         array[i].setPos(i);
     }
 
+    /**
+     * Swaps two items' position in the internal representation if the Heap
+     * The running time is O(1)
+     * @param i The first item to swap
+     * @param j The second item to swap
+     */
     private void swapItems(int i, int j) {
         DHeap_Item temp = array[i];
         setItem(i, array[j]);
         setItem(j, temp);
-
     }
 
+    /**
+     * for
+     * Running time is O(d)
+     * @param i The vertex who's first child we want
+     * @return The index of the first child for the given vertex
+     */
     private int minChildIndex(int i) {
         assert hasChildren(i);
         int start = child(i, 1);
@@ -332,19 +384,29 @@ public class DHeap {
 
 
     /**
-     * public String Get_Min()
-     * <p>
+     * Returns the element with the lowest key value in the heap
+     * The running time is O(1)
      * precondition: heapsize > 0
      * isHeap()
      * size > 0
-     * <p>
      * postcondition: isHeap()
+     * @return The element with the lowest key value in the heap
      */
     public DHeap_Item Get_Min() {
         assert size > 0;
         return array[0];
     }
 
+    /**
+     * Returns the element with the lowest key value in the heap, and deletes
+     * it from the heap
+     * The running time is O(logn) where n = size
+     * precondition: heapsize > 0
+     * isHeap()
+     * size > 0
+     * postcondition: isHeap()
+     * @return The element with the lowest key value in the heap
+     */
     private DHeap_Item popMin() {
         DHeap_Item item = Get_Min();
         Delete_Min();
