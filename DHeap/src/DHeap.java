@@ -206,11 +206,12 @@ public class DHeap {
 
     /**
      * Returns the number of children a specific vertex has
-     * Runs in O(1) time
+     * Runs in O(1) time.
+     * Made package local for testing
      * @param i The vertex we want to get the number of children it has
      * @return The number of children the given vertex has
      */
-    private int childrenCount(int i) {
+    int childrenCount(int i) {
         int c = child(i, 1);
         if (c >= size) {
             return 0;
