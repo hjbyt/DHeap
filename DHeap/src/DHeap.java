@@ -176,7 +176,7 @@ public class DHeap {
     }
 
     /**
-     * The methods compute the index of the parent for the heap element at
+ * The methods compute the index of the parent for the heap element at
      * the given offset
      * The running time is O(1)
      * precondition: i >= 0
@@ -375,6 +375,7 @@ public class DHeap {
         int end = lastChildIndex(i);
         int min_index = start;
         for (int j = start + 1; j <= end; j++) {
+            compare_count++;
             if (array[j].getKey() < array[min_index].getKey()) {
                 min_index = j;
             }

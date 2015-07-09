@@ -251,28 +251,37 @@ public class DHeapTest {
     @Test
     public void testMeasurements() throws Exception {
         int TEST_MAX_KEY_VALUE = 1000;
+        int ROUNDS_PER_MEASUREMENT = 10;
         for (int m : new int[]{1000, 10000, 100000}) {
             for (int d : new int[]{2, 3, 4}) {
-                DHeap heap = new DHeap(d, m);
-                int[] arr = getRandomArray(m, TEST_MAX_KEY_VALUE);
-                heap.arrayToHeap(arr);
-                ourHeapSortCopy(heap, m);
-                System.out.println("Number of comparisons for insertions m:=" + m + " d:= " + d + " comparisons:=" + heap.compare_count);
+                int totalComparisons = 0;
+                for (int i = 0; i < ROUNDS_PER_MEASUREMENT; i++) {
+                    DHeap heap = new DHeap(d, m);
+                    int[] arr = getRandomArray(m, TEST_MAX_KEY_VALUE);
+                    heap.arrayToHeap(arr);
+                    ourHeapSortCopy(heap, m);
+                    totalComparisons += heap.compare_count;
+                }
+                System.out.println("Number of comparisons for insertions m:=" + m + " d:= " + d + " average comparisons:=" + totalComparisons/10.0);
             }
         }
         for (int d : new int[]{2, 3, 4}) {
             for (int x : new int[]{1, 100, 1000}) {
-                int[] arr = getRandomArray(100000, TEST_MAX_KEY_VALUE);
-                DHeap_Item[] items = Arrays.stream(arr).mapToObj(i -> new DHeap_Item(null, i)).toArray(DHeap_Item[]::new);
-                DHeap heap = new DHeap(d, arr.length);
-                for (DHeap_Item item : items) {
-                    heap.Insert(item);
+                int totalComparisons = 0;
+                for (int j = 0; j < ROUNDS_PER_MEASUREMENT; j++) {
+                    int[] arr = getRandomArray(100000, TEST_MAX_KEY_VALUE);
+                    DHeap_Item[] items = Arrays.stream(arr).mapToObj(i -> new DHeap_Item(null, i)).toArray(DHeap_Item[]::new);
+                    DHeap heap = new DHeap(d, arr.length);
+                    for (DHeap_Item item : items) {
+                        heap.Insert(item);
+                    }
+                    heap.compare_count = 0; // Note - We only want the Decrease-Key comparisons
+                    for (DHeap_Item item : items) {
+                        heap.Decrease_Key(item, x);
+                    }
+                    totalComparisons += heap.compare_count;
                 }
-                heap.compare_count = 0; // Note - We only want the Decrease-Key comparisons
-                for (DHeap_Item item : items) {
-                    heap.Decrease_Key(item, x);
-                }
-                System.out.println("Number of comparisons for Decrease_Key d:= " + d + " x:= " + x + " comparisons:= " + heap.compare_count);
+                System.out.println("Number of comparisons for Decrease_Key d:= " + d + " x:= " + x + " average comparisons:= " + totalComparisons/10.0);
             }
         }
     }
