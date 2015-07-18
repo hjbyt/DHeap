@@ -3,14 +3,29 @@ import java.util.List;
 
 /**
  * D-Heap
+ *
  */
-
 public class DHeap {
 
+    /**
+     * Holds the number of elements currently in the heap
+     */
     private int size;
+    /**
+     * Holds the maximum number of elements possible for the heap to hold
+     */
     private int max_size;
+    /**
+     * The number of children each node in the d-heap structure has
+     */
     private int d;
+    /**
+     * The actualy members of the heap
+     */
     private DHeap_Item[] array;
+    /**
+     * Used for testing comparisons inside the heap, for measurements
+     */
     int compare_count; // Package local for testing
 
     // Constructor
@@ -462,7 +477,6 @@ public class DHeap {
      */
     public static int[] DHeapSort(int[] array) {
         assert array != null;
-        //TODO: is it ok to simply use d=2?
         return DHeapSort(array, 2);
     }
 
@@ -474,7 +488,6 @@ public class DHeap {
         for (int i = 0; i < array.length; i++) {
             sorted[i] = heap.popMin().getKey();
         }
-
         return sorted;
     }
 }
