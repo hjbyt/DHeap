@@ -28,9 +28,14 @@ public class DHeap {
      */
     int compare_count; // Package local for testing
 
-    // Constructor
-    // m_d >= 2, m_size > 0
+    /**
+     * Constructor for the DHeap class
+     * @param m_d The number of children for each node in the heap
+     * @param m_size The maximum size the heap might get
+     */
     DHeap(int m_d, int m_size) {
+        assert m_d >= 2;
+        assert m_size >= 0;
         max_size = m_size;
         d = m_d;
         array = new DHeap_Item[max_size];
