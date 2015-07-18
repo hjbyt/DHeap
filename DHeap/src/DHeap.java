@@ -2,8 +2,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * D-Heap
- *
+ * This class implements a heap structure over an internal array. The heap
+ * is a D-arry heap, meaning that each node has d children.
  */
 public class DHeap {
 
@@ -20,7 +20,7 @@ public class DHeap {
      */
     private int d;
     /**
-     * The actualy members of the heap
+     * The actually members of the heap
      */
     private DHeap_Item[] array;
     /**
@@ -318,8 +318,8 @@ public class DHeap {
     }
 
     /**
-     Deletes the smallest element from the heap.
-     The running time is O(logn) where n = size
+     * Deletes the smallest element from the heap.
+     * The running time is O(logn) where n = size
      * precondition: size > 0
      * isHeap()
      * postcondition: isHeap()
@@ -430,13 +430,14 @@ public class DHeap {
     }
 
     /**
-     * public void Decrease_Key(DHeap_Item item, int delta)
-     * <p>
+     * Decrease the key of the given item by the given amount
+     * The running time is O(logn) where n = size
      * precondition: item.pos < size;
      * item != null
      * isHeap()
-     * <p>
      * postcondition: isHeap()
+     * @param item The item who's key we want to decrease
+     * @param delta The value by which we want to decrease the item's key
      */
     public void Decrease_Key(DHeap_Item item, int delta) {
         assert delta >= 0;
@@ -449,19 +450,18 @@ public class DHeap {
     }
 
     /**
-     * public void Delete(DHeap_Item item)
-     * <p>
+     * Deletes the given item from the heap
+     * The running time is O(logn) where n = size
      * precondition: item.pos < size;
      * item != null
      * isHeap()
-     * <p>
      * postcondition: isHeap()
+     * @param item The item we want to delete from the heap
      */
     public void Delete(DHeap_Item item) {
         assert item != null;
         assert item.getPos() >= 0 && item.getPos() < size;
         assert array[item.getPos()] == item;
-        //TODO: can we simply delete it like we do in delete-min? it should be more efficient
         int i = item.getPos();
         while (i != 0) {
             int p = parent(i);
@@ -472,14 +472,24 @@ public class DHeap {
     }
 
     /**
-     * Return a sorted array containing the same integers in the input array.
-     * Sorting should be done using the DHeap.
+     * Return a sorted array containing the same integers in the input array
+     * (done using HeapSort with a d-arry heap where d=2)
+     * The running time is O(nlogn) where n = array.size
+     * @param array The array to sort
+     * @return A new array, with the same values as the received one but sorted
      */
     public static int[] DHeapSort(int[] array) {
         assert array != null;
         return DHeapSort(array, 2);
     }
 
+    /**
+     * Return a sorted array containing the same integers in the input array.
+     * The running time is O(nlogn) where n = array.size
+     * @param array The array to sort
+     * @param d The d-variable of the d-arry heap to use
+     * @return A new array, with the same values as the received one but sorted
+     */
     static int[] DHeapSort(int[] array, int d) {
         DHeap heap = new DHeap(d, array.length);
         heap.arrayToHeap(array);
