@@ -34,7 +34,7 @@ public class DHeap {
      * @param m_size The maximum size the heap might get
      */
     DHeap(int m_d, int m_size) {
-        assert m_d >= 2;
+        assert m_d >= 1;
         assert m_size >= 0;
         max_size = m_size;
         d = m_d;
