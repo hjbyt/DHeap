@@ -153,7 +153,7 @@ public class DHeap {
      */
     private void printTree(int i, String prefix, boolean isTail) {
         System.out.println(prefix + (isTail ? "+-- " : "+-- ") +
-                array[i].toString());
+                array[i].getKey());
 
         if (hasChildren(i)) {
             int start = child(i, 1);
