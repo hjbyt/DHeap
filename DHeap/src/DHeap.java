@@ -343,6 +343,12 @@ public class DHeap {
         array[size - 1] = null;
         size -= 1;
         heapifyDown(0);
+
+        // Note: This could be implemented nicely instead by simply calling:
+        //       Delete(Get_Min());
+        //       But that would increase the amount of comparisons by a
+        //       constant factor, and may mismatch the expected results for
+        //       the assignment, so we chose to leave it as it is.
     }
 
     /**
