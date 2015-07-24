@@ -4,9 +4,8 @@ import org.junit.Test;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assume.assumeNoException;
+import static org.junit.Assert.*;
+import static org.junit.Assume.*;
 
 public class DHeapTest {
 
@@ -180,10 +179,11 @@ public class DHeapTest {
                 // Note - We can't generate the list once because things might move around and we would have thr wrong
                 // Note - item position
                 DHeap_Item itemToDelete = getRandomItem(heap);
+                assertTrue(heap.getItems().contains(itemToDelete));
                 heap.Delete(itemToDelete);
+                assertFalse(heap.getItems().contains(itemToDelete));
                 size -= 1;
                 checkHeap(heap, size);
-                //TODO: check the the deleted item is indeed the one we wanted to delete, and the rest of the items are the same (like in Delete_Min test).
             }
         }
     }
