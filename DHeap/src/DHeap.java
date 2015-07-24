@@ -3,7 +3,7 @@ import java.util.List;
 
 /**
  * This class implements a heap structure over an internal array. The heap
- * is a D-arry heap, meaning that each node has d children.
+ * is a D-ary heap, meaning that each node has d children.
  */
 public class DHeap {
 
@@ -44,7 +44,6 @@ public class DHeap {
     }
 
     // For testing
-
     /**
      * Returns a list of all the items in the heap
      * @return All the items in the heap, as a list
@@ -65,7 +64,7 @@ public class DHeap {
      * The function builds a new heap from the given array.
      * Previous data of the heap will be erased.
      * The running time is O(n), where n = numbers.size()
-     * preconidtion: array1.length <= max_size
+     * precondition: array1.length <= max_size
      * postcondition: isHeap()
      * size = array.length()
      * @param array1 An array of all the items to insert into the heap
@@ -135,7 +134,7 @@ public class DHeap {
      * Prints the heap as a tree. Used internally for testing.
      * Running time is O(n) where n = size
      */
-    public void printTree() {
+    void printTree() {
         if (size > 0) {
             printTree(0, "", true);
         } else {
@@ -149,7 +148,7 @@ public class DHeap {
      * The running time is O(n) where n = size
      * @param i The index from which to start printing
      * @param prefix The prefix used in order to align all all the prints
-     * @param isTail Says wheather the current node is it's father's last child
+     * @param isTail Says weather the current node is it's father's last child
      */
     private void printTree(int i, String prefix, boolean isTail) {
         System.out.println(prefix + (isTail ? "+-- " : "+-- ") +
@@ -196,25 +195,25 @@ public class DHeap {
     }
 
     /**
- * The methods compute the index of the parent for the heap element at
-     * the given offset
+     * Computes the index of the parent for the heap element at
+     * the given index
      * The running time is O(1)
      * precondition: i >= 0
-     * @param i The element who's parent's offset is requested
-     * @return The index of the parant for the given element
+     * @param i The index of the element who's parent is requested
+     * @return The index of the parent for the given element
      */
     public int parent(int i) {
-        assert i > 0;
+        assert i > 0; //TODO could it be 0 ??
         return (i - 1) / d;
     }
 
     /**
-     * The methods compute the index of the parent and the k-th child of
-     * vertex i in a complete D-ary tree stored in an array. 1 <= k <= d.
+     * Computes the index of the k-th child of
+     * node i in a complete D-ary tree stored in an array. 1 <= k <= d.
      * Note that indices of arrays in Java start from 0.
      * The running time is O(1)
      * precondition: i >= 0
-     * @param i The vertex who's child is requested
+     * @param i The node who's child is requested
      * @param k The requested child's index in relations to the parent
      * @return The index of the requested child
      */
@@ -225,13 +224,13 @@ public class DHeap {
     }
 
     /**
-     * Returns the number of children a specific vertex has
+     * Returns the number of children a specific node has
      * Runs in O(1) time.
-     * Made package local for testing
-     * @param i The vertex we want to get the number of children it has
-     * @return The number of children the given vertex has
+     * precondition: i >= 0
+     * @param i The node we want to get the number of children it has
+     * @return The number of children the given node has
      */
-    int childrenCount(int i) {
+    private int childrenCount(int i) {
         int c = child(i, 1);
         if (c >= size) {
             return 0;
@@ -243,20 +242,23 @@ public class DHeap {
     }
 
     /**
-     * Says if a certain vertex has any children
+     * Says if a certain node has any children
      * The running time is O(1)
-     * @param i The vertex to check
-     * @return If the vertex has any children
+     * precondition: i >= 0
+     * @param i The node to check
+     * @return true iff the node has any children
      */
     private boolean hasChildren(int i) {
         return childrenCount(i) > 0;
     }
 
     /**
-     * Returns the index of the last child of the checked vertex
+     * Returns the index of the last child of the checked node
      * The running time is O(1)
-     * @param i The vertex to check
-     * @return The index of the last child of the tested vertex
+     * precondition: i >= 0
+     * precondition: hasChildren(i) == true
+     * @param i The node to check
+     * @return The index of the last child of the tested node
      */
     private int lastChildIndex(int i) {
         return child(i, childrenCount(i));
@@ -264,7 +266,7 @@ public class DHeap {
 
     /**
      * Inserts an item into the heap
-     * The running time is O(logn) where n = size
+     * The running time is O(log(d,n)) where n = size
      * precondition: item != null
      * isHeap()
      * size < max_size
@@ -280,15 +282,16 @@ public class DHeap {
     }
 
     /**
-     * Inserts an item into the heap
-     * The running time is O(logn) where n = size
+     * Inserts a new item from a number into the heap
+     * (for convenient testing)
+     * The running time is O(log(d,n)) where n = size
      * precondition: item != null
      * isHeap()
      * size < max_size
      * postcondition: isHeap()
      * @param number The number to insert to the heap (as a heap item)
      */
-    public void Insert(int number) {
+    void Insert(int number) {
         Insert(newItem(number));
     }
 
@@ -306,7 +309,7 @@ public class DHeap {
      * Makes sure the elements in the underlying array maintain the
      * heap property, under a specific node in the heap, swapping elements
      * if needed
-     * The running time is O(logn) where n = size
+     * The running time is O(log(d,n)) where n = size
      * @param i The heap index to start the process from
      */
     private void heapifyUp(int i) {
@@ -324,7 +327,7 @@ public class DHeap {
 
     /**
      * Deletes the smallest element from the heap.
-     * The running time is O(logn) where n = size
+     * The running time is O(d*log(d,n)) where n = size
      * precondition: size > 0
      * isHeap()
      * postcondition: isHeap()
@@ -341,7 +344,7 @@ public class DHeap {
      * Makes sure the elements in the underlying array maintain the
      * heap property, under a specific node in the heap, swapping elements
      * if needed
-     * The running time is O(logn) where n = size
+     * The running time is O(d*log(d,n)) where n = size
      * @param i The node from which to start the verification
      */
     private void heapifyDown(int i) {
@@ -358,12 +361,11 @@ public class DHeap {
     }
 
     /**
-     * Changes the heap's internal structures (all the relevant ones) to insert
-     * a DHeap_Item element into the specified position, and make sure that we
-     * are allowed to do so
+     * Set the specified array slot to the given item,
+     * and update the item's position.
      * The running time is O(1)
      * @param i The index at which to set the item
-     * @param item The item to put in the intenal array
+     * @param item The item to put in the internal array
      */
     private void setItem(int i, DHeap_Item item) {
         assert i >= 0 && i < size;
@@ -374,8 +376,8 @@ public class DHeap {
     /**
      * Swaps two items' position in the internal representation if the Heap
      * The running time is O(1)
-     * @param i The first item to swap
-     * @param j The second item to swap
+     * @param i The index of the first item
+     * @param j The index of the second item
      */
     private void swapItems(int i, int j) {
         DHeap_Item temp = array[i];
@@ -384,10 +386,12 @@ public class DHeap {
     }
 
     /**
-     * for
+     * Returns the index of the child with the lowest key
+     * from the given node's children
      * Running time is O(d)
-     * @param i The vertex who's first child we want
-     * @return The index of the first child for the given vertex
+     * precondition: hasChildren(i) == true
+     * @param i The node who's child we want
+     * @return The index of the child of the given node with the lowest key
      */
     private int minChildIndex(int i) {
         assert hasChildren(i);
@@ -407,7 +411,7 @@ public class DHeap {
     /**
      * Returns the element with the lowest key value in the heap
      * The running time is O(1)
-     * precondition: heapsize > 0
+     * precondition: heap-size > 0
      * isHeap()
      * size > 0
      * postcondition: isHeap()
@@ -419,10 +423,10 @@ public class DHeap {
     }
 
     /**
-     * Returns the element with the lowest key value in the heap, and deletes
-     * it from the heap
-     * The running time is O(logn) where n = size
-     * precondition: heapsize > 0
+     * Returns the element with the lowest key value in the heap,
+     * and deletes it from the heap
+     * The running time is O(d*log(d,n)) where n = size
+     * precondition: heap-size > 0
      * isHeap()
      * size > 0
      * postcondition: isHeap()
@@ -436,7 +440,7 @@ public class DHeap {
 
     /**
      * Decrease the key of the given item by the given amount
-     * The running time is O(logn) where n = size
+     * The running time is O(log(d,n)) where n = size
      * precondition: item.pos < size;
      * item != null
      * isHeap()
@@ -445,7 +449,7 @@ public class DHeap {
      * @param delta The value by which we want to decrease the item's key
      */
     public void Decrease_Key(DHeap_Item item, int delta) {
-        assert delta >= 0;
+        assert delta >= 0; //TODO: could it be negative?
         assert item != null;
         assert item.getPos() < size;
         int key = item.getKey();
@@ -456,7 +460,7 @@ public class DHeap {
 
     /**
      * Deletes the given item from the heap
-     * The running time is O(logn) where n = size
+     * The running time is O(d*log(d,n)) where n = size
      * precondition: item.pos < size;
      * item != null
      * isHeap()
@@ -464,6 +468,7 @@ public class DHeap {
      * @param item The item we want to delete from the heap
      */
     public void Delete(DHeap_Item item) {
+        //TODO: improve implementation?
         assert item != null;
         assert item.getPos() >= 0 && item.getPos() < size;
         assert array[item.getPos()] == item;
@@ -478,10 +483,10 @@ public class DHeap {
 
     /**
      * Return a sorted array containing the same integers in the input array
-     * (done using HeapSort with a d-arry heap where d=2)
-     * The running time is O(nlogn) where n = array.size
+     * (done using HeapSort with a d-ary heap where d=2)
+     * The running time is O(n*log(n)) where n = array.size
      * @param array The array to sort
-     * @return A new array, with the same values as the received one but sorted
+     * @return A new array with the same values as the received one but sorted
      */
     public static int[] DHeapSort(int[] array) {
         assert array != null;
@@ -490,10 +495,10 @@ public class DHeap {
 
     /**
      * Return a sorted array containing the same integers in the input array.
-     * The running time is O(nlogn) where n = array.size
+     * The running time is O(n*d*log(d,n)) where n = array.size
      * @param array The array to sort
-     * @param d The d-variable of the d-arry heap to use
-     * @return A new array, with the same values as the received one but sorted
+     * @param d The arity of the d-ary heap to use
+     * @return A new array with the same values as the received one but sorted
      */
     static int[] DHeapSort(int[] array, int d) {
         DHeap heap = new DHeap(d, array.length);

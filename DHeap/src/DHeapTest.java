@@ -1,4 +1,3 @@
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,9 +17,9 @@ public class DHeapTest {
 
     private static Random rand = getRandom();
 
-    List<DHeap> heaps;
+    private List<DHeap> heaps;
 
-    public static Random getRandom() {
+    private static Random getRandom() {
         Random random = new Random();
         long seed = random.nextLong();
         random.setSeed(seed);
@@ -81,7 +80,7 @@ public class DHeapTest {
     }
 
     // This is used for tests that expect a heap with items, but shouldn't fail just because heap construction fails.
-    public static void initHeap(DHeap heap, List<Integer> numbers) {
+    private static void initHeap(DHeap heap, List<Integer> numbers) {
         try {
             heap.arrayToHeap(numbers);
             checkHeap(heap, numbers.size());
@@ -90,7 +89,7 @@ public class DHeapTest {
         }
     }
 
-    public static void initHeap(DHeap heap, int[] numbers) {
+    private static void initHeap(DHeap heap, int[] numbers) {
         try {
             heap.arrayToHeap(numbers);
             checkHeap(heap, numbers.length);
@@ -207,8 +206,13 @@ public class DHeapTest {
     @Test
     public void testDHeapSort() throws Exception {
         for (int d = 1; d <= NUMBER_OF_HEAPS; d++) {
-            testSortArray(copyArray(TEST_NUMBERS.toArray(new Integer[TEST_NUMBERS.size()])), d);
+            int[] numbers = copyArray(TEST_NUMBERS.toArray(new Integer[TEST_NUMBERS.size()]));
+            testSortArray(numbers, d);
         }
+        int[] numbers = copyArray(TEST_NUMBERS.toArray(new Integer[TEST_NUMBERS.size()]));
+        int[] ourSorted = DHeap.DHeapSort(numbers);
+        Arrays.sort(numbers);
+        assertArrayEquals(ourSorted, numbers);
     }
 
     @Test
