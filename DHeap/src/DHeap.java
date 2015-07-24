@@ -1,6 +1,10 @@
 import java.util.Arrays;
 import java.util.List;
 
+//TODO: add our info
+
+//TODO: add a case for runtime complexity where d=1 ??
+
 /**
  * This class implements a heap structure over an internal array. The heap
  * is a D-ary heap, meaning that each node has d children.
@@ -174,7 +178,8 @@ public class DHeap {
      */
     public boolean isHeap() {
         for (int i = size - 1; i > 0; i--) {
-            if (array[i].getKey() < array[parent(i)].getKey()) {
+            if (array[i] == null || array[parent(i)] == null ||
+                array[i].getKey() < array[parent(i)].getKey()) {
                 return false;
             }
         }
@@ -198,12 +203,12 @@ public class DHeap {
      * Computes the index of the parent for the heap element at
      * the given index
      * The running time is O(1)
-     * precondition: i >= 0
+     * precondition: i > 0
      * @param i The index of the element who's parent is requested
      * @return The index of the parent for the given element
      */
     public int parent(int i) {
-        assert i > 0; //TODO could it be 0 ??
+        assert i > 0;
         return (i - 1) / d;
     }
 
