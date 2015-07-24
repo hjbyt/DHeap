@@ -473,17 +473,21 @@ public class DHeap {
      * @param item The item we want to delete from the heap
      */
     public void Delete(DHeap_Item item) {
-        //TODO: improve implementation?
         assert item != null;
-        assert item.getPos() >= 0 && item.getPos() < size;
-        assert array[item.getPos()] == item;
         int i = item.getPos();
-        while (i != 0) {
-            int p = parent(i);
-            swapItems(i, p);
-            i = p;
+        assert i >= 0 && i < size;
+        assert array[i] == item;
+
+        DHeap_Item replacement = array[size - 1];
+        setItem(i, replacement);
+        array[size - 1] = null;
+        size -= 1;
+
+        if (replacement.getKey() > item.getKey()) {
+            heapifyDown(i);
+        } else if (replacement.getKey() < item.getKey()) {
+            heapifyUp(i);
         }
-        Delete_Min();
     }
 
     /**
