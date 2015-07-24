@@ -140,6 +140,17 @@ public class DHeapTest {
     }
 
     @Test
+    public void testIsHeap() throws Exception {
+        for (DHeap heap : heaps) {
+            initHeap(heap, TEST_NUMBERS);
+            DHeap_Item min_item = heap.Get_Min();
+            assertTrue(heap.isHeap());
+            min_item.setKey(999);
+            assertFalse(heap.isHeap());
+        }
+    }
+
+    @Test
     public void testGet_Min_Fuzz() throws Exception {
         for (DHeap heap : heaps) {
             int[] contents = getRandomArray(rand.nextInt(MAX_SIZE), MAX_CONTENT_VALUE);
