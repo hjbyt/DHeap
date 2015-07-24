@@ -244,12 +244,6 @@ public class DHeapTest {
         }
     }
 
-    @Test
-    public void testFuzz() throws Exception {
-        //TODO
-    }
-
-
     private void ourHeapSortCopy(DHeap heap, int m) {
         // Note - here we copy some code from the DHeapSort because their requested API
         // Note - doesn't allow us to do what they ask us to measure...
