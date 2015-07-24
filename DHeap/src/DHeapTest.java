@@ -23,7 +23,7 @@ public class DHeapTest {
         Random random = new Random();
         long seed = random.nextLong();
         random.setSeed(seed);
-        // Print seed to allow retesting with the same seed...
+        // Print seed to allow retesting with the same seed
         System.out.printf("Random seed: %s\n", Long.toString(seed));
         return random;
     }
@@ -61,9 +61,16 @@ public class DHeapTest {
 
     @Test
     public void testChildParent() {
-        // TODO - Think about how to test these methods
-        // TODO - Need to make sure that calling "parent" on the root is ok, and calling "child" on a leaf is also ok
-        // Maybe, it shouldn't be ok, but we should at least make it explicitly wrong to do so
+        int d = 1;
+        for (DHeap heap : heaps) {
+            initHeap(heap, TEST_NUMBERS);
+            for (int i = 0; i <= TEST_NUMBERS.size(); i++) {
+                for (int k = 1; k <= d; k++) {
+                    assertEquals(i, heap.parent(heap.child(i, k)));
+                }
+            }
+            d += 1;
+        }
     }
 
     @Test
