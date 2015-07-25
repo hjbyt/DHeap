@@ -255,15 +255,6 @@ public class DHeapTest {
         }
     }
 
-    private void ourHeapSortCopy(DHeap heap, int m) {
-        // Note - here we copy some code from the DHeapSort because their requested API
-        // Note - doesn't allow us to do what they ask us to measure...
-        // Note - We also don't care about the result, just the deletion of keys
-        for (int i = 0; i < m; i++) {
-            heap.Delete_Min();
-        }
-    }
-
     @Test
     public void testMeasurements() throws Exception {
         int TEST_MAX_KEY_VALUE = 1000;
@@ -272,11 +263,9 @@ public class DHeapTest {
             for (int d : new int[]{2, 3, 4}) {
                 int totalComparisons = 0;
                 for (int i = 0; i < ROUNDS_PER_MEASUREMENT; i++) {
-                    DHeap heap = new DHeap(d, m);
                     int[] arr = getRandomArray(m, TEST_MAX_KEY_VALUE);
-                    heap.arrayToHeap(arr);
-                    ourHeapSortCopy(heap, m);
-                    totalComparisons += heap.compare_count;
+                    DHeap.SortResult sortResult = DHeap.DHeapSortMeasure(arr, d);
+                    totalComparisons += sortResult.comparisons;
                 }
                 System.out.println("Number of comparisons for insertions m:=" + m + " d:= " + d + " average comparisons:=" + totalComparisons/10.0);
             }

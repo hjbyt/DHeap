@@ -543,6 +543,20 @@ public class DHeap {
      * @return A new array with the same values as the received one but sorted
      */
     static int[] DHeapSort(int[] array, int d) {
+        SortResult sortResult = DHeapSortMeasure(array, d);
+        return sortResult.array;
+    }
+
+    /**
+     * Return a sorted array containing the same integers in the input array,
+     * and also count the amount of comparisons made to detect the order.
+     * The running time is O(n*d*log(d,n)) where n = array.size
+     *
+     * @param array The array to sort
+     * @param d     The arity of the d-ary heap to use
+     * @return A new array with the same values as the received one but sorted
+     */
+    static SortResult DHeapSortMeasure(int[] array, int d) {
         DHeap heap = new DHeap(d, array.length);
         heap.arrayToHeap(array);
 
@@ -550,6 +564,20 @@ public class DHeap {
         for (int i = 0; i < array.length; i++) {
             sorted[i] = heap.popMin().getKey();
         }
-        return sorted;
+        return new SortResult(sorted, heap.compare_count);
+    }
+
+    /**
+     * Auxiliary class used to hold the result
+     * of a DHeapSortMeasure operation.
+     */
+    static class SortResult {
+        public int[] array;
+        public int comparisons;
+
+        public SortResult(int[] array, int comparisons) {
+            this.array = array;
+            this.comparisons = comparisons;
+        }
     }
 }
