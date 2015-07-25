@@ -267,9 +267,11 @@ public class DHeapTest {
                     DHeap.SortResult sortResult = DHeap.DHeapSortMeasure(arr, d);
                     totalComparisons += sortResult.comparisons;
                 }
-                System.out.println("Number of comparisons for insertions m:=" + m + " d:= " + d + " average comparisons:=" + totalComparisons/10.0);
+                double average = (double)totalComparisons / (double)ROUNDS_PER_MEASUREMENT;
+                System.out.printf("Number of comparisons for insertions m:=%s, d:=%s, average comparisons:=%s\n", m, d, average);
             }
         }
+        System.out.println("-------------------------------------------");
         for (int d : new int[]{2, 3, 4}) {
             for (int x : new int[]{1, 100, 1000}) {
                 int totalComparisons = 0;
@@ -286,7 +288,8 @@ public class DHeapTest {
                     }
                     totalComparisons += heap.compare_count;
                 }
-                System.out.println("Number of comparisons for Decrease_Key d:= " + d + " x:= " + x + " average comparisons:= " + totalComparisons/10.0);
+                double average = (double)totalComparisons / (double)ROUNDS_PER_MEASUREMENT;
+                System.out.printf("Number of comparisons for Decrease_Key d:=%s, x:=%s, average comparisons:=%s\n", d, x, average);
             }
         }
     }
