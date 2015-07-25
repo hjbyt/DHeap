@@ -284,7 +284,7 @@ public class DHeap {
 
     /**
      * Inserts an item into the heap
-     * The running time is O(log(d,n)) where n = size
+     * The running time is O(log(n)/log(d)) where n = size
      * precondition: item != null
      * isHeap()
      * size < max_size
@@ -303,7 +303,7 @@ public class DHeap {
     /**
      * Inserts a new item from a number into the heap
      * (for convenient testing)
-     * The running time is O(log(d,n)) where n = size
+     * The running time is O(log(n)/log(d)) where n = size
      * precondition: item != null
      * isHeap()
      * size < max_size
@@ -330,7 +330,7 @@ public class DHeap {
      * Makes sure the elements in the underlying array maintain the
      * heap property, under a specific node in the heap, swapping elements
      * if needed
-     * The running time is O(log(d,n)) where n = size
+     * The running time is O(log(n)/log(d)) where n = size
      *
      * @param i The heap index to start the process from
      */
@@ -349,7 +349,7 @@ public class DHeap {
 
     /**
      * Deletes the smallest element from the heap.
-     * The running time is O(d*log(d,n)) where n = size
+     * The running time is O(d/log(d)*log(n)) where n = size
      * precondition: size > 0
      * isHeap()
      * postcondition: isHeap()
@@ -372,7 +372,7 @@ public class DHeap {
      * Makes sure the elements in the underlying array maintain the
      * heap property, under a specific node in the heap, swapping elements
      * if needed
-     * The running time is O(d*log(d,n)) where n = size
+     * The running time is O(d/log(d)*log(n)) where n = size
      *
      * @param i The node from which to start the verification
      */
@@ -458,7 +458,7 @@ public class DHeap {
     /**
      * Returns the element with the lowest key value in the heap,
      * and deletes it from the heap
-     * The running time is O(d*log(d,n)) where n = size
+     * The running time is O(d/log(d)*log(n)) where n = size
      * precondition: heap-size > 0
      * isHeap()
      * size > 0
@@ -474,7 +474,7 @@ public class DHeap {
 
     /**
      * Decrease the key of the given item by the given amount
-     * The running time is O(log(d,n)) where n = size
+     * The running time is O(log(n)/log(d)) where n = size
      * precondition: item.pos < size;
      * item != null
      * isHeap()
@@ -495,7 +495,7 @@ public class DHeap {
 
     /**
      * Deletes the given item from the heap
-     * The running time is O(d*log(d,n)) where n = size
+     * The running time is O(d/log(d)*log(n)) where n = size
      * precondition: item.pos < size;
      * item != null
      * isHeap()
@@ -536,7 +536,7 @@ public class DHeap {
 
     /**
      * Return a sorted array containing the same integers in the input array.
-     * The running time is O(n*d*log(d,n)) where n = array.size
+     * The running time is O(d/log(d)*n*log(n)) where n = array.size
      *
      * @param array The array to sort
      * @param d     The arity of the d-ary heap to use
@@ -550,7 +550,7 @@ public class DHeap {
     /**
      * Return a sorted array containing the same integers in the input array,
      * and also count the amount of comparisons made to detect the order.
-     * The running time is O(n*d*log(d,n)) where n = array.size
+     * The running time is O(d/log(d)*n*log(n)) where n = array.size
      *
      * @param array The array to sort
      * @param d     The arity of the d-ary heap to use
