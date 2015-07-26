@@ -12,28 +12,30 @@ import java.util.List;
 public class DHeap {
 
     /**
-     * Holds the number of elements currently in the heap
+     * Holds the number of elements currently in the heap.
      */
     private int size;
     /**
-     * Holds the maximum number of elements possible for the heap to hold
+     * Holds the maximum number of elements possible for the heap to hold.
      */
     private int max_size;
     /**
-     * The number of children each node in the d-heap structure has
+     * The number of children each node in the d-heap structure has.
      */
     private int d;
     /**
-     * The actually members of the heap
+     * The actually members of the heap.
      */
     private DHeap_Item[] array;
     /**
-     * Used for testing comparisons inside the heap, for measurements
+     * Used for testing comparisons inside the heap, for measurements.
      */
     int compare_count; // Package local for testing
 
     /**
-     * Constructor for the DHeap class
+     * Constructor for the DHeap class.
+     *
+     * Runtime: O(max_size)
      *
      * @param m_d    The number of children for each node in the heap
      * @param m_size The maximum size the heap might get
@@ -50,16 +52,21 @@ public class DHeap {
 
     // For testing
     /**
-     * Returns a list of all the items in the heap
+     * Returns a list of all the items in the heap.
+     *
+     * Runtime: O(n)
      *
      * @return All the items in the heap, as a list
+     *
      */
     List<DHeap_Item> getItems() {
         return Arrays.asList(array).subList(0, size);
     }
 
     /**
-     * Returns the size of the heap
+     * Returns the size of the heap.
+     *
+     * Runtime: O(1)
      *
      * @return The current number of elements in the heap
      */
@@ -70,10 +77,10 @@ public class DHeap {
     /**
      * The function builds a new heap from the given array.
      * Previous data of the heap will be erased.
-     * The running time is O(n), where n = numbers.size()
+     *
      * precondition: array1.length <= max_size
-     * postcondition: isHeap()
-     * size = array.length()
+     * postcondition: isHeap(), size = array.length()
+     * Runtime: O(n)
      *
      * @param array1 An array of all the items to insert into the heap
      */
@@ -94,9 +101,10 @@ public class DHeap {
     /**
      * Make a heap from an array of numbers. Erases the current contents of
      * the heap.
-     * The running time is O(n), where n = numbers.length
+     *
      * precondition: numbers.length <= max_size
-     * postcondition: isHeap(); size = array.length();
+     * postcondition: isHeap(), size = array.length()
+     * Runtime: O(n)
      *
      * @param numbers The numbers to insert into the heap
      */
@@ -111,9 +119,10 @@ public class DHeap {
     /**
      * Make a heap from a list of Integers. Erases the current contents of
      * the heap.
-     * The running time is O(n), where n = numbers.size()
+     *
      * precondition: numbers.size() <= max_size
-     * postcondition: isHeap(); size = array.length();
+     * postcondition: isHeap(), size = array.length()
+     * Runtime: O(n)
      *
      * @param numbers The numbers to insert into the heap
      */
@@ -128,7 +137,8 @@ public class DHeap {
     /**
      * Makes sure the internal array is structured like a heap, moving elements
      * where necessary.
-     * The running time is O(n), where n = size
+     *
+     * Runtime: O(n)
      */
     private void heapify() {
         if (size <= 1) {
@@ -142,7 +152,8 @@ public class DHeap {
 
     /**
      * Prints the heap as a tree. Used internally for testing.
-     * Running time is O(n) where n = size
+     *
+     * Runtime: O(n)
      */
     void printTree() {
         if (size > 0) {
@@ -153,9 +164,10 @@ public class DHeap {
     }
 
     /**
-     * The internal method that prints a part of the heap as a subtree
+     * The internal method that prints a part of the heap as a subtree.
+     *
      * Note: adapted from http://stackoverflow.com/a/8948691
-     * The running time is O(n) where n = size
+     * Runtime: O(n), n = sub-heap size.
      *
      * @param i      The index from which to start printing
      * @param prefix The prefix used in order to align all all the prints
@@ -180,7 +192,8 @@ public class DHeap {
      * public boolean isHeap()
      * The function returns true if and only if the D-ary tree rooted at
      * array[0] satisfies the heap property or size == 0.
-     * Running time is O(n) where n = size
+     *
+     * Runtime: O(n)
      *
      * @return If the array satisfies the properties of a D-ary tree
      */
@@ -196,8 +209,9 @@ public class DHeap {
 
     /**
      * An internal method, used to assert the internal array satisfies the
-     * properties of a D-ary heap, and a few more internal tests
-     * Running time is O(n) where n = size
+     * properties of a D-ary heap, and a few more internal tests.
+     *
+     * Runtime: O(n)
      */
     void checkHeap() {
         assert size >= 0 && size <= max_size;
@@ -209,10 +223,11 @@ public class DHeap {
 
     /**
      * Computes the index of the parent for the heap element at
-     * the given index
-     * The running time is O(1)
-     * precondition: i > 0
+     * the given index.
      *
+     * precondition: i > 0
+     * Runtime: O(1)
+     * 
      * @param i The index of the element who's parent is requested
      * @return The index of the parent for the given element
      */
@@ -225,9 +240,10 @@ public class DHeap {
      * Computes the index of the k-th child of
      * node i in a complete D-ary tree stored in an array. 1 <= k <= d.
      * Note that indices of arrays in Java start from 0.
-     * The running time is O(1)
-     * precondition: i >= 0
      *
+     * precondition: i >= 0
+     * Runtime: O(1)
+     * 
      * @param i The node who's child is requested
      * @param k The requested child's index in relations to the parent
      * @return The index of the requested child
@@ -239,9 +255,10 @@ public class DHeap {
     }
 
     /**
-     * Returns the number of children a specific node has
-     * Runs in O(1) time.
+     * Returns the number of children a specific node has.
+     *
      * precondition: i >= 0
+     * Runtime: O(1)
      *
      * @param i The node we want to get the number of children it has
      * @return The number of children the given node has
@@ -258,9 +275,10 @@ public class DHeap {
     }
 
     /**
-     * Says if a certain node has any children
-     * The running time is O(1)
+     * Says if a certain node has any children.
+     *
      * precondition: i >= 0
+     * Runtime: O(1)
      *
      * @param i The node to check
      * @return true iff the node has any children
@@ -270,10 +288,11 @@ public class DHeap {
     }
 
     /**
-     * Returns the index of the last child of the checked node
-     * The running time is O(1)
+     * Returns the index of the last child of the checked node.
+     *
      * precondition: i >= 0
      * precondition: hasChildren(i) == true
+     * Runtime: O(1)
      *
      * @param i The node to check
      * @return The index of the last child of the tested node
@@ -283,12 +302,11 @@ public class DHeap {
     }
 
     /**
-     * Inserts an item into the heap
-     * The running time is O(log(n)/log(d)) where n = size
-     * precondition: item != null
-     * isHeap()
-     * size < max_size
+     * Inserts an item into the heap.
+     *
+     * precondition: item != null, isHeap(), size < max_size
      * postcondition: isHeap()
+     * Runtime: O(log(n)/log(d))
      *
      * @param item The heap item to insert
      */
@@ -301,13 +319,11 @@ public class DHeap {
     }
 
     /**
-     * Inserts a new item from a number into the heap
-     * (for convenient testing)
-     * The running time is O(log(n)/log(d)) where n = size
-     * precondition: item != null
-     * isHeap()
-     * size < max_size
+     * Inserts a new item from a number into the heap.
+     *
+     * precondition: item != null, isHeap(), size < max_size
      * postcondition: isHeap()
+     * Runtime: O(log(n)/log(d))
      *
      * @param number The number to insert to the heap (as a heap item)
      */
@@ -316,8 +332,9 @@ public class DHeap {
     }
 
     /**
-     * Creates a new DHeap_Item from a number, to insert it into the heap
-     * Runs in O(1)
+     * Creates a new DHeap_Item from a number, to insert it into the heap.
+     *
+     * Runtime: O(1)
      *
      * @param number The number to wrap
      * @return The DHeap_Item wrapping the number
@@ -329,8 +346,9 @@ public class DHeap {
     /**
      * Makes sure the elements in the underlying array maintain the
      * heap property, under a specific node in the heap, swapping elements
-     * if needed
-     * The running time is O(log(n)/log(d)) where n = size
+     * if needed.
+     *
+     * Runtime: O(log(n)/log(d))
      *
      * @param i The heap index to start the process from
      */
@@ -349,10 +367,10 @@ public class DHeap {
 
     /**
      * Deletes the smallest element from the heap.
-     * The running time is O(d/log(d)*log(n)) where n = size
-     * precondition: size > 0
-     * isHeap()
+     *
+     * precondition: size > 0, isHeap()
      * postcondition: isHeap()
+     * Runtime: O(d/log(d)*log(n))
      */
     public void Delete_Min() {
         assert size > 0;
@@ -371,8 +389,9 @@ public class DHeap {
     /**
      * Makes sure the elements in the underlying array maintain the
      * heap property, under a specific node in the heap, swapping elements
-     * if needed
-     * The running time is O(d/log(d)*log(n)) where n = size
+     * if needed.
+     *
+     * Runtime: O(d/log(d)*log(n))
      *
      * @param i The node from which to start the verification
      */
@@ -392,7 +411,8 @@ public class DHeap {
     /**
      * Set the specified array slot to the given item,
      * and update the item's position.
-     * The running time is O(1)
+     *
+     * Runtime: O(1)
      *
      * @param i    The index at which to set the item
      * @param item The item to put in the internal array
@@ -404,8 +424,9 @@ public class DHeap {
     }
 
     /**
-     * Swaps two items' position in the internal representation if the Heap
-     * The running time is O(1)
+     * Swaps two items' position in the internal representation if the Heap.
+     *
+     * Runtime: O(1)
      *
      * @param i The index of the first item
      * @param j The index of the second item
@@ -418,9 +439,10 @@ public class DHeap {
 
     /**
      * Returns the index of the child with the lowest key
-     * from the given node's children
-     * Running time is O(d)
+     * from the given node's children.
+     *
      * precondition: hasChildren(i) == true
+     * Runtime: O(d)
      *
      * @param i The node who's child we want
      * @return The index of the child of the given node with the lowest key
@@ -441,12 +463,11 @@ public class DHeap {
 
 
     /**
-     * Returns the element with the lowest key value in the heap
-     * The running time is O(1)
-     * precondition: heap-size > 0
-     * isHeap()
-     * size > 0
+     * Returns the element with the lowest key value in the heap.
+     *
+     * precondition: heap-size > 0, isHeap(), size > 0
      * postcondition: isHeap()
+     * Runtime: O(1)
      *
      * @return The element with the lowest key value in the heap
      */
@@ -457,12 +478,11 @@ public class DHeap {
 
     /**
      * Returns the element with the lowest key value in the heap,
-     * and deletes it from the heap
-     * The running time is O(d/log(d)*log(n)) where n = size
-     * precondition: heap-size > 0
-     * isHeap()
-     * size > 0
+     * and deletes it from the heap.
+     *
+     * precondition: heap-size > 0, isHeap(), size > 0
      * postcondition: isHeap()
+     * Runtime: O(d/log(d)*log(n))
      *
      * @return The element with the lowest key value in the heap
      */
@@ -473,12 +493,11 @@ public class DHeap {
     }
 
     /**
-     * Decrease the key of the given item by the given amount
-     * The running time is O(log(n)/log(d)) where n = size
-     * precondition: item.pos < size;
-     * item != null
-     * isHeap()
+     * Decrease the key of the given item by the given amount.
+     *
+     * precondition: item.pos < size, item != null, isHeap()
      * postcondition: isHeap()
+     * Runtime: O(log(n)/log(d))
      *
      * @param item  The item who's key we want to decrease
      * @param delta The value by which we want to decrease the item's key
@@ -494,12 +513,11 @@ public class DHeap {
     }
 
     /**
-     * Deletes the given item from the heap
-     * The running time is O(d/log(d)*log(n)) where n = size
-     * precondition: item.pos < size;
-     * item != null
-     * isHeap()
+     * Deletes the given item from the heap.
+     *
+     * precondition: item.pos < size, item != null, isHeap()
      * postcondition: isHeap()
+     * Runtime: O(d/log(d)*log(n))
      *
      * @param item The item we want to delete from the heap
      */
@@ -523,8 +541,9 @@ public class DHeap {
 
     /**
      * Return a sorted array containing the same integers in the input array
-     * (done using HeapSort with a d-ary heap where d=2)
-     * The running time is O(n*log(n)) where n = array.size
+     * (done using HeapSort with a d-ary heap where d=2).
+     *
+     * Runtime: O(n*log(n)), n = array.length
      *
      * @param array The array to sort
      * @return A new array with the same values as the received one but sorted
@@ -536,7 +555,8 @@ public class DHeap {
 
     /**
      * Return a sorted array containing the same integers in the input array.
-     * The running time is O(d/log(d)*n*log(n)) where n = array.size
+     *
+     * Runtime: O(d/log(d)*n*log(n)), n = array.length
      *
      * @param array The array to sort
      * @param d     The arity of the d-ary heap to use
@@ -550,7 +570,8 @@ public class DHeap {
     /**
      * Return a sorted array containing the same integers in the input array,
      * and also count the amount of comparisons made to detect the order.
-     * The running time is O(d/log(d)*n*log(n)) where n = array.size
+     *
+     * Runtime: O(d/log(d)*n*log(n)), n = array.length
      *
      * @param array The array to sort
      * @param d     The arity of the d-ary heap to use
