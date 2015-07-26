@@ -484,7 +484,7 @@ public class DHeap {
      * @param delta The value by which we want to decrease the item's key
      */
     public void Decrease_Key(DHeap_Item item, int delta) {
-        assert delta >= 0; //TODO: could it be negative?
+        assert delta >= 0;
         assert item != null;
         assert item.getPos() < size;
         int key = item.getKey();
