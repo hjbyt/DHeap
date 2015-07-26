@@ -85,8 +85,8 @@ public class DHeap {
      * Previous data of the heap will be erased.
      *
      * <pre>
-     * precondition: array1.length <= max_size
-     * postcondition: isHeap(), size = array.length()
+     * Precondition: array1.length <= max_size
+     * Postcondition: isHeap(), size = array.length()
      * Runtime: O(n)
      * </pre>
      *
@@ -111,8 +111,8 @@ public class DHeap {
      * the heap.
      *
      * <pre>
-     * precondition: numbers.length <= max_size
-     * postcondition: isHeap(), size = array.length()
+     * Precondition: numbers.length <= max_size
+     * Postcondition: isHeap(), size = array.length()
      * Runtime: O(n)
      * </pre>
      *
@@ -131,8 +131,8 @@ public class DHeap {
      * the heap.
      *
      * <pre>
-     * precondition: numbers.size() <= max_size
-     * postcondition: isHeap(), size = array.length()
+     * Precondition: numbers.size() <= max_size
+     * Postcondition: isHeap(), size = array.length()
      * Runtime: O(n)
      * </pre>
      *
@@ -248,7 +248,7 @@ public class DHeap {
      * the given index.
      *
      * <pre>
-     * precondition: i > 0
+     * Precondition: i > 0
      * Runtime: O(1)
      * </pre>
      * 
@@ -266,7 +266,7 @@ public class DHeap {
      * Note that indices of arrays in Java start from 0.
      *
      * <pre>
-     * precondition: i >= 0
+     * Precondition: i >= 0
      * Runtime: O(1)
      * </pre>
      * 
@@ -284,7 +284,7 @@ public class DHeap {
      * Returns the number of children a specific node has.
      *
      * <pre>
-     * precondition: i >= 0
+     * Precondition: i >= 0
      * Runtime: O(1)
      * </pre>
      *
@@ -306,7 +306,7 @@ public class DHeap {
      * Says if a certain node has any children.
      *
      * <pre>
-     * precondition: i >= 0
+     * Precondition: i >= 0
      * Runtime: O(1)
      * </pre>
      *
@@ -321,8 +321,8 @@ public class DHeap {
      * Returns the index of the last child of the checked node.
      *
      * <pre>
-     * precondition: i >= 0
-     * precondition: hasChildren(i) == true
+     * Precondition: i >= 0
+     * Precondition: hasChildren(i) == true
      * Runtime: O(1)
      * </pre>
      *
@@ -337,8 +337,8 @@ public class DHeap {
      * Inserts an item into the heap.
      *
      * <pre>
-     * precondition: item != null, isHeap(), size < max_size
-     * postcondition: isHeap()
+     * Precondition: item != null, isHeap(), size < max_size
+     * Postcondition: isHeap()
      * Runtime: O(log(n)/log(d))
      * </pre>
      *
@@ -356,8 +356,8 @@ public class DHeap {
      * Inserts a new item from a number into the heap.
      *
      * <pre>
-     * precondition: item != null, isHeap(), size < max_size
-     * postcondition: isHeap()
+     * Precondition: item != null, isHeap(), size < max_size
+     * Postcondition: isHeap()
      * Runtime: O(log(n)/log(d))
      * </pre>
      *
@@ -409,8 +409,8 @@ public class DHeap {
      * Deletes the smallest element from the heap.
      *
      * <pre>
-     * precondition: size > 0, isHeap()
-     * postcondition: isHeap()
+     * Precondition: size > 0, isHeap()
+     * Postcondition: isHeap()
      * Runtime: O(d/log(d)*log(n))
      * </pre>
      */
@@ -490,7 +490,7 @@ public class DHeap {
      * from the given node's children.
      *
      * <pre>
-     * precondition: hasChildren(i) == true
+     * Precondition: hasChildren(i) == true
      * Runtime: O(d)
      * </pre>
      *
@@ -516,8 +516,8 @@ public class DHeap {
      * Returns the element with the lowest key value in the heap.
      *
      * <pre>
-     * precondition: heap-size > 0, isHeap(), size > 0
-     * postcondition: isHeap()
+     * Precondition: heap-size > 0, isHeap(), size > 0
+     * Postcondition: isHeap()
      * Runtime: O(1)
      * </pre>
      *
@@ -533,8 +533,8 @@ public class DHeap {
      * and deletes it from the heap.
      *
      * <pre>
-     * precondition: heap-size > 0, isHeap(), size > 0
-     * postcondition: isHeap()
+     * Precondition: heap-size > 0, isHeap(), size > 0
+     * Postcondition: isHeap()
      * Runtime: O(d/log(d)*log(n))
      * </pre>
      *
@@ -550,8 +550,8 @@ public class DHeap {
      * Decrease the key of the given item by the given amount.
      *
      * <pre>
-     * precondition: item.pos < size, item != null, isHeap()
-     * postcondition: isHeap()
+     * Precondition: item.pos < size, item != null, isHeap()
+     * Postcondition: isHeap()
      * Runtime: O(log(n)/log(d))
      * </pre>
      *
@@ -572,8 +572,8 @@ public class DHeap {
      * Deletes the given item from the heap.
      *
      * <pre>
-     * precondition: item.pos < size, item != null, isHeap()
-     * postcondition: isHeap()
+     * Precondition: item.pos < size, item != null, isHeap()
+     * Postcondition: isHeap()
      * Runtime: O(d/log(d)*log(n))
      * </pre>
      *

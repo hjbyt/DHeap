@@ -271,6 +271,42 @@ public class DHeapTest {
                 System.out.printf("Number of comparisons for insertions m:=%s, d:=%s, average comparisons:=%s\n", m, d, average);
             }
         }
+
+//        int TEST_MAX_KEY_VALUE = 500;
+//        int ROUNDS = 10000000;
+//        int max = 0;
+//        long total = 0;
+//        int d = 2;
+//        for (int i = 0 ; i < ROUNDS; i++) {
+//            int[] array = getRandomArray(7, TEST_MAX_KEY_VALUE);
+//            DHeap.SortResult sortResult = DHeap.DHeapSortMeasure(array, d);
+//            int c = sortResult.comparisons;
+//            total += c;
+//            max = c > max ? c : max;
+//            if (c >= 22) {
+//                System.out.println("c=" + c);
+//                DHeap heap = new DHeap(d, array.length);
+//                heap.arrayToHeap(array);
+//                heap.printTree();
+//                heap.getItems().stream().forEach(x -> System.out.print(x.getKey() + ","));
+//                System.out.println();
+//                break;
+//            }
+//        }
+//        double average = (double)total / (double)ROUNDS;
+//        System.out.printf("max = %s, avg = %s\n", max, average);
+
+//        int[] array = {67,81,243,162,229,279,399};
+//        DHeap.SortResult sortResult = DHeap.DHeapSortMeasure(array, 2);
+//        int c = sortResult.comparisons;
+//        System.out.println("c="+c);
+//        DHeap heap = new DHeap(2, array.length);
+//        heap.arrayToHeap(array);
+//        heap.printTree();
+//        heap.getItems().stream().forEach(x -> System.out.print(x.getKey() + ","));
+//        System.out.println();
+
+
         System.out.println("-------------------------------------------");
         for (int d : new int[]{2, 3, 4}) {
             for (int x : new int[]{1, 100, 1000}) {
