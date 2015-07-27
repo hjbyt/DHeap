@@ -68,8 +68,15 @@
 
 \begin_body
 
+\begin_layout Section*
+Part I
+\end_layout
+
+\begin_layout Subsection*
+Basis:
+\end_layout
+
 \begin_layout Standard
-Notation: 
 \begin_inset Formula $n$
 \end_inset
 
@@ -78,18 +85,53 @@ Notation:
 \end_inset
 
  - heap arity, 
-\begin_inset Formula $k:=\left\lceil \log_{d}(n)\right\rceil $
+\begin_inset Formula $h$
 \end_inset
 
- - height of the heap
+ - height of the heap.
 \begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $d\geq2$
+\end_inset
+
+ is assumed.
+ For 
+\begin_inset Formula $d=1$
+\end_inset
+
+ the heap is degenerated, and the operations will take 
+\begin_inset Formula $\Theta(n^{2})$
+\end_inset
+
+ at the worst case.
+\begin_inset Newline newline
+\end_inset
+
+The amount of items in depth 
+\begin_inset Formula $k$
+\end_inset
+
+ is at most 
+\begin_inset Formula $d^{k}$
+\end_inset
+
+.
+ Therefore:
+\begin_inset Formula 
+\begin{eqnarray*}
+\sum_{k=1}^{h-1}d^{k} & \leq & n\Rightarrow\frac{d^{h}-1}{d-1}\leq n\Rightarrow\frac{d^{h}-1}{d}\leq n\Rightarrow d^{h}\leq nd+1\Rightarrow\\
+h & \leq & \log_{d}(nd+1)\leq\log_{d}(nd+1)\leq\log_{d}(2nd)=\log_{d}(2)+\log_{d}(n)+1\leq\log_{d}(n)+2
+\end{eqnarray*}
+
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
-Analysis of heapifyDown worst-case run-time complexity:
+\begin_layout Subsection*
+Analysis of heapifyDown:
 \end_layout
 
 \begin_layout Standard
@@ -101,76 +143,93 @@ It takes exactly
 \begin_inset Formula $1$
 \end_inset
 
- more comparison to determine if the current node should be swapped with
- it's minimum child.
+ comparison to determine if the current node should be swapped with it's
+ minimum child.
  Therefore 
 \begin_inset Formula $d$
 \end_inset
 
- comparisons are done at each recursion level, and there are at most 
-\begin_inset Formula $h$
+ comparisons are done at each iteration, and there are at most 
+\begin_inset Formula $k$
 \end_inset
 
- recursions for a node at height 
-\begin_inset Formula $h$
+ iterations for a node at height 
+\begin_inset Formula $k$
 \end_inset
 
 .
  Therefore for a call on a node of height 
-\begin_inset Formula $i$
+\begin_inset Formula $k$
 \end_inset
 
 , there are at most 
-\begin_inset Formula $dh$
+\begin_inset Formula $dk$
 \end_inset
 
  comparisons.
-\begin_inset Newline newline
-\end_inset
+\end_layout
 
-
+\begin_layout Subsection*
+Analysis of arrayToHeap (implemented with heapify):
 \end_layout
 
 \begin_layout Standard
-Analysis of arrayToHeap (implemented with heapify) worst case run-time complexit
-y:
-\end_layout
-
-\begin_layout Standard
-At depth 
-\begin_inset Formula $i$
+Let 
+\begin_inset Formula $x$
 \end_inset
 
- there are at most 
-\begin_inset Formula $d^{i}$
+ be the number of leaves in the heap.
+ Then the number of nodes of height 
+\begin_inset Formula $1$
 \end_inset
 
-items.
- Starting with depth 
-\begin_inset Formula $k-1$
+ is 
+\begin_inset Formula $\left\lceil \frac{x}{d}\right\rceil \leq\frac{x}{d}+1$
 \end_inset
 
- down to 0, heapify calls heapifyDown on each node.
- Therefore, from the analysis of heapifyDown, the amount of comparisons
+.
+ The number of nodes of height 2 is 
+\begin_inset Formula $\left\lceil \frac{\left\lceil \frac{x}{d}\right\rceil }{d}\right\rceil \leq\frac{\frac{x}{d}+1}{d}+1=\frac{x}{d^{2}}+\frac{1}{d}+1$
+\end_inset
+
+.
+ Similarly the number of nodes of height 3 is not greater then 
+\begin_inset Formula $\frac{x}{d^{3}}+\frac{1}{d^{2}}+\frac{1}{d}+1$
+\end_inset
+
+.
+ Also, obviously 
+\begin_inset Formula $x\leq n$
+\end_inset
+
+.
+ It's easy to see that the number of nodes of height 
+\begin_inset Formula $k$
+\end_inset
+
+ is not greater then 
+\begin_inset Formula $\frac{n}{d^{k}}+2$
+\end_inset
+
+.
+ From this, and from the analysis of heapifyDown, , the amount of comparisons
  done by arrayToHeap is bounded by:
 \begin_inset Formula 
 \begin{eqnarray*}
-Comparisons & \leq & d\cdot d^{k-1}+2d\cdot d^{k-2}+\ldots+kd\cdot d^{k-k}=\\
- &  & \sum_{i=1}^{k}idd^{k-i}=\sum_{i=1}^{k}idnd^{-i}=dn\sum_{i=1}^{k}\frac{i}{d^{i}}\leq dn\sum_{i=1}^{\infty}\frac{i}{d^{i}}=\\
- &  & dn\frac{d}{\left(d-1\right)^{2}}=n\frac{d^{2}}{(d-1)^{2}}\leq5n=O(n)
+Comparisons & \leq & \sum_{k=1}^{h}dk\left(\frac{n}{d^{k}}+2\right)\stackrel{\mbox{*}}{\leq}\sum_{k=1}^{h}dk\cdot2\frac{n}{d^{k}}=2nd\sum_{k=1}^{h}\frac{k}{d^{k}}\leq2nd\sum_{k=0}^{\infty}\frac{k}{d^{k}}\\
+ & = & 2nd\frac{d}{(d-1)^{2}}=2n\left(\frac{d}{(d-1)}\right)^{2}\leq8n=O(n)
 \end{eqnarray*}
 
 \end_inset
 
-Where the last transition is true for 
-\begin_inset Formula $d\geq2$
+ Where the second transition is true for large enough 
+\begin_inset Formula $n$
 \end_inset
 
 .
- 
-\end_layout
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
 Also, 
 \begin_inset Formula $\varOmega(n)$
 \end_inset
@@ -181,39 +240,17 @@ Also,
 \end_inset
 
  comparisons are required to find a minimum item in an unordered list.
- Therefore arrayToHeap executes 
+\begin_inset Newline newline
+\end_inset
+
+Therefore arrayToHeap executes 
 \begin_inset Formula $\Theta(n)$
 \end_inset
 
- comparisons if 
-\begin_inset Formula $d\geq2$
-\end_inset
-
-.
+ comparisons.
 \end_layout
 
-\begin_layout Standard
-For 
-\begin_inset Formula $d=1$
-\end_inset
-
- we have:
-\begin_inset Formula 
-\[
-Comparisons\leq\sum_{i=1}^{n}i=\frac{n(n+1)}{n}=O(n^{2})
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-And that bound is indeed achieved when a list in reverse-order is given
- to arrayToHeap.
-\end_layout
-
-\begin_layout Standard
+\begin_layout Subsection*
 Analysis of DHeapSort (i.e.
  
 \begin_inset Formula $n$
@@ -223,12 +260,13 @@ Analysis of DHeapSort (i.e.
 \end_layout
 
 \begin_layout Standard
-As each delete-min simply calls heapifyDown on the root, and heapifyDown
- is 
-\begin_inset Formula $O(dh)=O(dk)=O(d\,\log_{d}(n))=O(\frac{d}{\log(d)}\log(n))$
+As each delete-min simply calls heapifyDown on the root, then from the analysis
+ of heapifyDown, the number of comparisons is 
+\begin_inset Formula $O(dh)=O(d(\log_{d}(n)+2))=O(d\log_{d}(n))=O(\frac{d}{\log(d)}\log(n))$
 \end_inset
 
-, then the series of 
+.
+ Then the series of 
 \begin_inset Formula $n$
 \end_inset
 
@@ -237,37 +275,41 @@ As each delete-min simply calls heapifyDown on the root, and heapifyDown
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-
 \color red
-TODO: show why is this a tight bound TODO.
- also analyze d=1 ??
-\end_layout
 
-\begin_layout Standard
-XXX To show the bound is tight, we'll assume 
+\begin_inset Newline newline
+\end_inset
+
+TODO: show why is this a tight bound TODO.
+\color inherit
+
+\begin_inset Newline newline
+\end_inset
+
+The seriese of 
 \begin_inset Formula $n$
 \end_inset
 
- is such that the last level of the heap is filled.
- XXX
-\end_layout
-
-\begin_layout Standard
-Therefore arrayToHeap+DHeapSort is 
-\begin_inset Formula $O(n+\frac{d}{\log(d)}n\log(n))=O(\frac{d}{\log(d)}n\log(n))$
+ delete-mins is more dominant than arrayToHeap, therefore the overall amount
+ of comparisons at the worst-case is 
+\begin_inset Formula $\Theta(\frac{d}{\log(d)}n\log(n))$
 \end_inset
 
 .
 \end_layout
 
+\begin_layout Subsection*
+Measurements Explanation
+\end_layout
+
 \begin_layout Standard
-I assume the average case has the same run-time complexity, but i can't
- prove it.
- Anyway - the difference in performance between this sort, and e.g.
- mergesort, is the term 
+Assuming the average case has a similar run-time complexity, the measurements
+ can be explained:
+\begin_inset Newline newline
+\end_inset
+
+The difference in performance between this sort and an optimal sort, e.g.
+ merge-sort, is the term 
 \begin_inset Formula $\frac{d}{\log(d)}$
 \end_inset
 
@@ -308,17 +350,30 @@ I assume the average case has the same run-time complexity, but i can't
 \end_inset
 
 , so it has the lowest amount of comparisons achievable using DHeapSort.
-\begin_inset Newline newline
+\end_layout
+
+\begin_layout Section*
+Part II
+\end_layout
+
+\begin_layout Subsection*
+Analysis of heapifyUp:
+\end_layout
+
+\begin_layout Standard
+When heapifyUp is called on an item at depth 
+\begin_inset Formula $k$
 \end_inset
 
-
-\begin_inset Newline newline
+, then at most 
+\begin_inset Formula $k$
 \end_inset
 
--------
-\begin_inset Newline newline
-\end_inset
+ comparisons and swaps are performed, as the item is only compared to it's
+ parent.
+\end_layout
 
+\begin_layout Subsection*
 Analysis of 
 \begin_inset Formula $n$
 \end_inset
@@ -327,20 +382,8 @@ Analysis of
 \end_layout
 
 \begin_layout Standard
-Analysis of heapifyUp: when heapifyUp is called on an item in depth 
-\begin_inset Formula $h$
-\end_inset
-
-, then at most
-\begin_inset Formula $h$
-\end_inset
-
- comparisons and swaps are performed.
-\end_layout
-
-\begin_layout Standard
 The maximum depth of an item in a heap is 
-\begin_inset Formula $\left\lceil \log_{d}(n)\right\rceil $
+\begin_inset Formula $h\leq\log_{d}(n)+2=O(\log_{d}(n))$
 \end_inset
 
 , therefore 
@@ -352,13 +395,23 @@ The maximum depth of an item in a heap is
 \end_inset
 
 
-\end_layout
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
-The bound is tight, the following input shows:
-\end_layout
+The bound is tight, as the following input shows:
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
+
+\color red
+TODO: the range of values can't be more than 1001! this makes the following
+ example wrong, and may allow for a lower upper bound!
+\color inherit
+ 
+\begin_inset Newline newline
+\end_inset
+
+
 \begin_inset Formula $n$
 \end_inset
 
@@ -376,15 +429,48 @@ The bound is tight, the following input shows:
 \begin_inset Quotes eld
 \end_inset
 
-heapified-up
+heapified up
 \begin_inset Quotes erd
 \end_inset
 
  from the deepest level to the root.
+\begin_inset Newline newline
+\end_inset
+
+Therefore the amount of comparisons of in 
+\begin_inset Formula $n$
+\end_inset
+
+ Decrease-Key calls at the worst case is 
+\begin_inset Formula $\Theta(\frac{n\log(n)}{\log(d)})$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Note: if 
+\begin_inset Formula $d\geq n$
+\end_inset
+
+ then the worst case is 
+\begin_inset Formula $\Theta(n)$
+\end_inset
+
+, because 
+\begin_inset Formula $\varOmega(n)$
+\end_inset
+
+ is an obvious lower bound.
+\end_layout
+
+\begin_layout Subsection*
+Measurements Explanation
 \end_layout
 
 \begin_layout Standard
-Indeed the measurements show that for 
+Assuming the average case has a similar run-time complexity, the measurements
+ show that for 
 \begin_inset Formula $x=100$
 \end_inset
 
@@ -392,19 +478,23 @@ Indeed the measurements show that for
 \begin_inset Formula $x=1000$
 \end_inset
 
-, the number of comparisons is shrinks as d grows.
-\end_layout
+, the number of comparisons indeed shrinks as 
+\begin_inset Formula $d$
+\end_inset
 
-\begin_layout Standard
+ grows, as expected.
+\begin_inset Newline newline
+\end_inset
+
 The lower-bound for the best case is 
 \begin_inset Formula $n-1$
 \end_inset
 
- comparisons, in the case where no item changes it's position (
+ comparisons, in the case where no item changes its position (
 \begin_inset Formula $-1$
 \end_inset
 
- because the root item never need to be heapified-up).
+ because the root item never needs to be heapified-up).
  That bound is indeed achieved for the case where 
 \begin_inset Formula $x=1$
 \end_inset
@@ -415,11 +505,12 @@ The lower-bound for the best case is
 \end_inset
 
  will not make them swap.
- Because heap is built by insertions and not via arrayToHeap, then if a
- node and it's parent have the same key, then the parent must have been
+ Because the heap is built by insertions and not via arrayToHeap, then if
+ a node and it's parent have the same key, then the parent must have been
  inserted earlier (because nodes are inserted to the bottom of the heap
- and are heapified up), and thus will have it's key decreased earlier, so
- there isn't a possibility for them to swap.
+ and are heapified up).
+ Therefore the parent's key will be decreased earlier, so there isn't a
+ possibility for them to swap.
 \end_layout
 
 \end_body
