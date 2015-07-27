@@ -304,12 +304,28 @@ Measurements Explanation
 
 \begin_layout Standard
 Assuming the average case has a similar run-time complexity, the measurements
- can be explained:
+ can be explained.:
 \begin_inset Newline newline
 \end_inset
 
-The difference in performance between this sort and an optimal sort, e.g.
- merge-sort, is the term 
+As seen in the measurements, the amount of comparisons is linearithmic (
+\begin_inset Formula $n\log(n)$
+\end_inset
+
+ relation) in 
+\begin_inset Formula $n$
+\end_inset
+
+, as expected.
+\begin_inset Newline newline
+\end_inset
+
+The amount of comparisons appears to be lowest when 
+\begin_inset Formula $d=3$
+\end_inset
+
+.
+ This can be explained by examining the term 
 \begin_inset Formula $\frac{d}{\log(d)}$
 \end_inset
 
@@ -349,7 +365,7 @@ The difference in performance between this sort and an optimal sort, e.g.
 \begin_inset Formula $e$
 \end_inset
 
-, so it has the lowest amount of comparisons achievable using DHeapSort.
+, so it yields the lowest amount of comparisons achievable using DHeapSort.
 \end_layout
 
 \begin_layout Section*
