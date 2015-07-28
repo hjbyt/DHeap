@@ -59,7 +59,6 @@ public class DHeap {
      * </pre>
      *
      * @return All the items in the heap, as a list
-     *
      */
     List<DHeap_Item> getItems() {
         return Arrays.asList(array).subList(0, size);
@@ -94,8 +93,10 @@ public class DHeap {
         assert array1.length <= max_size;
         size = array1.length;
         for (int i = 0; i < size; i++) {
-            //TODO: need to make a copy of the item!
-            setItem(i, array1[i]);
+            DHeap_Item item = array1[i];
+            DHeap_Item itemCopy = new DHeap_Item(item.getName(),
+                    item.getKey());
+            setItem(i, itemCopy);
         }
         for (int i = size; i < max_size; i++) {
             // Clear old values to allow GC to collect them.
@@ -250,7 +251,7 @@ public class DHeap {
      * Precondition: i > 0
      * Runtime: O(1)
      * </pre>
-     * 
+     *
      * @param i The index of the element who's parent is requested
      * @return The index of the parent for the given element
      */
@@ -268,7 +269,7 @@ public class DHeap {
      * Precondition: i >= 0
      * Runtime: O(1)
      * </pre>
-     * 
+     *
      * @param i The node who's child is requested
      * @param k The requested child's index in relations to the parent
      * @return The index of the requested child
