@@ -605,6 +605,10 @@ Therefore the amount of comparisons of in the overall operation is at the
 \begin_inset Newline newline
 \end_inset
 
+
+\begin_inset Newline newline
+\end_inset
+
 Note: if 
 \begin_inset Formula $d\geq n$
 \end_inset
@@ -618,6 +622,22 @@ Note: if
 \end_inset
 
  is an obvious lower bound.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Note: The TA later changed the requirement to analyze the worst case of
+ a single Decrease-Key call.
+ It's obvious that the W.C.
+ for a single call is 
+\begin_inset Formula $\Theta(\log_{d}(n))=O(\frac{\log(n)}{\log(d)})$
+\end_inset
+
+.
+ We left the full analysis as it didn't seem right to delete it.
 \end_layout
 
 \begin_layout Subsection*
