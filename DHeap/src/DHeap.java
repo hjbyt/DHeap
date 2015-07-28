@@ -1,7 +1,13 @@
+/**
+ * D-Heap Implementation
+ *
+ * Authors: <Name1> <ID1> <USERNAME1>
+ *          <Name2> <ID2> <USERNAME2>
+ *
+ */
+
 import java.util.Arrays;
 import java.util.List;
-
-//TODO: add our info
 
 /**
  * This class implements a heap structure over an internal array. The heap
