@@ -50,7 +50,7 @@ public class DHeap
 
 
  /**
-     * public static int parent(i), child(i,k)
+     * public int parent(i), child(i,k)
      * (2 methods)
      *
      * precondition: i >= 0
@@ -59,8 +59,8 @@ public class DHeap
      * vertex i in a complete D-ary tree stored in an array. 1 <= k <= d.
      * Note that indices of arrays in Java start from 0.
      */
-    public static int parent(int i) { return 999;} // just for illustration - should be replaced by student code
-    public static int child (int i, int k) { return 999;} // just for illustration - should be replaced by student code 
+    public int parent(int i) { return 999;} // just for illustration - should be replaced by student code
+    public int child (int i, int k) { return 999;} // just for illustration - should be replaced by student code 
 
     /**
     * public void Insert(DHeap_Item item)
