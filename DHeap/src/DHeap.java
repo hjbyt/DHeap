@@ -3,8 +3,6 @@ import java.util.List;
 
 //TODO: add our info
 
-//TODO: add a case for runtime complexity where d=1 ??
-
 /**
  * This class implements a heap structure over an internal array. The heap
  * is a D-ary heap, meaning that each node has d children.
@@ -96,6 +94,7 @@ public class DHeap {
         assert array1.length <= max_size;
         size = array1.length;
         for (int i = 0; i < size; i++) {
+            //TODO: need to make a copy of the item!
             setItem(i, array1[i]);
         }
         for (int i = size; i < max_size; i++) {
