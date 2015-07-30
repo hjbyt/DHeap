@@ -605,7 +605,7 @@ public class DHeap {
 
     /**
      * Return a sorted array containing the same integers in the input array
-     * (done using HeapSort with a d-ary heap where d=2).
+     * (done using HeapSort with a d-ary heap where d=3).
      *
      * <pre>
      * Runtime: O(n*log(n)), n = array.length
@@ -616,7 +616,7 @@ public class DHeap {
      */
     public static int[] DHeapSort(int[] array) {
         assert array != null;
-        return DHeapSort(array, 2);
+        return DHeapSort(array, 3);
     }
 
     /**
