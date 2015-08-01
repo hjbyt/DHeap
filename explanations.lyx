@@ -118,7 +118,7 @@ Basis
 \begin_inset Newline newline
 \end_inset
 
-The amount of items in depth 
+The amount of items at depth 
 \begin_inset Formula $k$
 \end_inset
 
@@ -290,7 +290,7 @@ As each delete-min simply calls heapifyDown on the root, then from the analysis
 
 
 \color inherit
-This bound is tight at the following example shows:
+This bound is tight at the following scenario shows:
 \begin_inset Newline newline
 \end_inset
 
@@ -350,20 +350,93 @@ Given this scenario, the first half of the
 \end_inset
 
  nodes).
- Therefore, for 
-\begin_inset Formula $\Theta(n)$
+ 
+\begin_inset Newline newline
 \end_inset
 
- nodes, 
+In a heap, more than 
+\begin_inset Formula $\frac{n}{2}$
+\end_inset
+
+ of the nodes are leafs.
+ So in this scenario more than 
+\begin_inset Formula $\frac{n}{4}$
+\end_inset
+
+ of the nodes are leafs with key 
+\begin_inset Formula $3$
+\end_inset
+
+.
+ When delete-min is called, they are moved to the top, and are heapified
+ down, 
+\begin_inset Quotes eld
+\end_inset
+
+dropping
+\begin_inset Quotes erd
+\end_inset
+
+ to the left by swapping with nodes with key 
+\begin_inset Formula $2$
+\end_inset
+
+.
+ Few of them become inner nodes before others can become leafs.
+ Let 
+\begin_inset Formula $L$
+\end_inset
+
+ be the amount of leafs in the heap.
+ 
+\begin_inset Formula $x=\frac{L}{2}$
+\end_inset
+
+ leafs have key 
+\begin_inset Formula $2,$
+\end_inset
+
+ and 
+\begin_inset Formula $x=\frac{L}{2}$
+\end_inset
+
+ leaves have key 
+\begin_inset Formula $3$
+\end_inset
+
+.
+ The amount of ancestors nodes with key 2 have is bounded:
+\begin_inset Formula 
+\begin{eqnarray*}
+Ancestors & = & \sum_{k=1}^{h}\left\lceil \frac{x}{d^{k}}\right\rceil \leq\sum_{k=1}^{h}\left(\frac{x}{d^{k}}+1\right)=h+x\sum_{k=1}^{h}\frac{1}{d^{k}}\leq h+x\sum_{k=1}^{\infty}\frac{1}{d^{k}}\\
+ & \leq & \log_{d}(n)+2+\frac{x}{d-1}\leq\frac{2x}{d-1}
+\end{eqnarray*}
+
+\end_inset
+
+Let 
+\begin_inset Formula $J$
+\end_inset
+
+ be the amount of nodes with key 
+\begin_inset Formula $3$
+\end_inset
+
+ that end up dropping to the bottom.
+\begin_inset Formula 
+\[
+J\geq x-Ancestors\geq x-\frac{2x}{d-1}=x\left(1-\frac{2}{d-1}\right)=x\cdot\frac{d-3}{d-1}\geq\frac{x}{2}=\frac{L}{4}\geq\frac{n}{8}=\Omega(n)
+\]
+
+\end_inset
+
+Therefore a linear portion of the key-3 nodes will be traveling all the
+ way from the root to the bottom, making 
 \begin_inset Formula $\Theta(d\log_{d}(n))$
 \end_inset
 
- comparisons will be made.
- Therefore the bound above is tight, 
-\begin_inset Formula $\Theta(\frac{d}{\log(d)}n\log(n))$
-\end_inset
-
- comparisons will be made at the worst case.
+ comparisons each, proving the tightness of the bound.
+ 
 \begin_inset Newline newline
 \end_inset
 
@@ -381,7 +454,6 @@ The entire operation will therefore make
 
 
 \begin_inset Float figure
-placement h
 wide false
 sideways false
 status open
@@ -589,7 +661,7 @@ In a heap of size
 \end_inset
 
  of the operations, in both phases, will indeed cost 
-\begin_inset Formula $\Theta(n\log_{d}(n))$
+\begin_inset Formula $\Theta(\log_{d}(n))$
 \end_inset
 
  comparisons, showing that the bound is tight.
@@ -633,7 +705,7 @@ Note: The TA later changed the requirement to analyze the worst case of
  a single Decrease-Key call.
  It's obvious that the W.C.
  for a single call is 
-\begin_inset Formula $\Theta(\log_{d}(n))=O(\frac{\log(n)}{\log(d)})$
+\begin_inset Formula $\Theta(\log_{d}(n))=\Theta(\frac{\log(n)}{\log(d)})$
 \end_inset
 
 .
